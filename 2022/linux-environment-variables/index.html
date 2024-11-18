@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Dison">
+    <meta name="description" content="Dison 的个人博客">
+    
+    
+    
+    <link rel="next" href="https://lovedison.cn/2023/mysql-lock/" />
+    <link rel="canonical" href="https://lovedison.cn/2022/linux-environment-variables/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            Linux环境变量 | LoveDison&#39;s Blog
+        
+    </title>
+    <meta name="title" content="Linux环境变量 | LoveDison&#39;s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/lovedison.cn"
+    },
+    "articleSection" : "post",
+    "name" : "Linux环境变量",
+    "headline" : "Linux环境变量",
+    "description" : "对于linux或者mac，bash是用户和系统交互的最基本的脚本环境。 而**zsh（Z shell）**是bash的一个替代品，他对于bash",
+    "inLanguage" : "zh-cn",
+    "author" : "Dison",
+    "creator" : "Dison",
+    "publisher": "Dison",
+    "accountablePerson" : "Dison",
+    "copyrightHolder" : "Dison",
+    "copyrightYear" : "2022",
+    "datePublished": "2022-05-25 14:20:54 \u002b0800 CST",
+    "dateModified" : "2022-05-25 14:20:54 \u002b0800 CST",
+    "url" : "https:\/\/lovedison.cn\/2022\/linux-environment-variables\/",
+    "wordCount" : "1526",
+    "keywords" : [ "linux", "LoveDison\u0027s Blog"]
+}
+</script>
+
+  </head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://lovedison.cn">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/post/" title="">技术博客</a>
+                
+                <a class="menu-item" href="/mood/" title="">我的心情</a>
+                
+                <a class="menu-item" href="/book/" title="">读书文摘</a>
+                
+                <a class="menu-item" href="/other/" title="">工具方法</a>
+                
+                <a class="menu-item" href="/categories/" title="">目录</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/about-me/" title="">关于我</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://lovedison.cn">LoveDison&#39;s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/post/" title="">
+                            <h3>技术博客</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/mood/" title="">
+                            <h3>我的心情</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/book/" title="">
+                            <h3>读书文摘</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/other/" title="">
+                            <h3>工具方法</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>目录</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>标签</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about-me/" title="">
+                            <h3>关于我</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux环境变量</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://lovedison.cn" rel="author">Dison</a>
+                <span class="post-time">
+                on <time datetime=2022-05-25 itemprop="datePublished">May 25, 2022</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://lovedison.cn/categories/linux/"> linux, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">1526 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+            
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <p>对于linux或者mac，bash是用户和系统交互的最基本的脚本环境。</p>
+<p>而**zsh（Z shell）**是bash的一个替代品，他对于bash有了很多的优化，无论是使用命令，外观，体验，能够让用户更方便顺畅的使用Terminal。</p>
+<h3 id="linux提供了修改和查看环境变量的命令">Linux提供了修改和查看环境变量的命令：</h3>
+<ul>
+<li>echo 显示某个环境变量值 echo $PATH</li>
+<li>export 设置一个新的环境变量 export HELLO=&ldquo;hello&rdquo; (可以无引号)</li>
+<li>env 显示所有环境变量</li>
+<li>set 显示本地定义的shell变量</li>
+<li>unset 清除环境变量 unset HELLO</li>
+<li>readonly 设置只读环境变量 readonly HELLO</li>
+</ul>
+<h3 id="环境变量执行顺序">环境变量执行顺序</h3>
+<p><img src="../../post/linux01.png" alt="linux01" loading="lazy" ></p>
+<h2 id="1-profile-bashrcbash_profile-bashrc"><strong>1. profile、 bashrc、.bash_profile、 .bashrc</strong></h2>
+<p>bash会在用户登录时，读取下列四个环境配置文件：</p>
+<p>全局环境变量设置文件：/etc/profile、/etc/bashrc。用户环境变量设置文件：~/.bash_profile、~/.bashrc。</p>
+<p><strong>读取顺序：① /etc/profile、② ~/.bash_profile、③ ~/.bashrc、④ /etc/bashrc。</strong></p>
+<p>**①
+/etc/profile：此文件为系统的每个用户设置环境信息，系统中每个用户登录时都要执行这个脚本，如果系统管理员希望某个设置对所有用户都生效，可以写在这个脚本里，该文件也会从/etc/profile.d目录中的配置文件中搜集shell的设置。
+**</p>
+<p>②**~/.bash_profile**：每个用户都可使用该文件设置专用于自己的shell信息，当用户登录时，该文件仅执行一次。默认情况下，他设置一些环境变量，执行用户的.bashrc文件。</p>
+<p><strong>③~/.bashrc：该文件包含专用于自己的shell信息，当登录时以及每次打开新shell时，该文件被读取。</strong></p>
+<p>④**/etc/bashrc**：为每一个运行bash shell的用户执行此文件，当bash shell被打开时，该文件被读取。</p>
+<h2 id="2-bashrc和bash_profile的区别"><strong>2 .bashrc和.bash_profile的区别</strong></h2>
+<ul>
+<li>.bash_profile会用在登陆shell， .bashrc 使用在交互式非登陆 shell
+。简单说来，它们的区别主要是.bash_profile是在你每次登录的时候执行的；.bashrc是在你新开了一个命令行窗口时执行的。</li>
+<li>当通过控制台进行登录（输入用户名和密码）：在初始化命令行提示符的时候会执行.bash_profile 来配置你的shell环境。</li>
+<li>但是如果已经登录到机器，在Gnome或者是KDE也开了一个新的终端窗口（xterm），这时，.bashrc会在窗口命令行提示符出现前被执行。当你在终端敲入/bin/bash时.bashrc也会在这个新的bash实例启动的时候执行。</li>
+</ul>
+<h2 id="3-建议"><strong>3. 建议</strong></h2>
+<p>大多数的时候你不想维护两个独立的配置文件，一个登录的一个非登录的shell。当你设置PATH时，你想在两个文件都适用。可以在.bash_profile中调用.bashrc，然后将PATH和其他通用的设置放到.bashrc中。要做到这几点，添加以下几行到.bash_profile中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f ~/.bashrc <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    . ~/.bashrc
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><p>现在，当你从控制台登录机器的时候，.bashrc就会被执行。</p>
+<h2 id="ps环境变量">PS环境变量</h2>
+<p>PS即是Prompt String,命令提示符的意思。在bash中一共有四个。分为表示为<code>PS1</code>,<code>PS2</code>,<code>PS3</code>,<code>PS4</code>。</p>
+<ul>
+<li>PS1是用来控制默认提示符显示格式。
+<ul>
+<li><code>\t</code>显示时间为24小时格式，如HHMMSS</li>
+<li><code>\T</code>显示时间为12小时格式</li>
+<li><code>\A</code>显示时间为24小时格式HHMM</li>
+<li><code>\u</code>当前用户的账号名称</li>
+<li><code>\v</code>BASH的版本信息</li>
+<li><code>\w</code>完整的工作目录名称</li>
+</ul>
+</li>
+<li>一个非常长的命令可以通过在末尾加<code>\</code>使其分行显示。多行命令的默认提示符是<code>&gt;</code>。 我们可以通过修改<code>PS2</code>，将提示符修改为<code>-&gt;</code>。</li>
+<li>PS3: shell脚本中使用<code>select</code>循环时的提示符。</li>
+<li>PS4: 它是Linux/Unix下的一个用于控制脚本调试显示信息的环境变量。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Dison </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://lovedison.cn/2022/linux-environment-variables/>https://lovedison.cn/2022/linux-environment-variables/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://lovedison.cn/tags/linux/">
+                    #linux</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://lovedison.cn">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        
+        <a href="https://lovedison.cn/2023/mysql-lock/" class="next" rel="next" title="Mysql锁分析">Mysql锁分析&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            
+<div class="footer-box">
+    <footer class="footer">
+        <div class="copyright">
+            &copy;
+            
+            <span itemprop="copyrightYear">2020 - 2024</span>
+            
+            <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+            
+            <span class="author" itemprop="copyrightHolder"><a href="https://lovedison.cn">Dison</a> | </span>
+            
+
+            
+        </div>
+    </footer>
+    
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/love.min.js"></script>
+
+
+
+
+    
+    <div class="back-to-top" id="back_to_top">
+        
+        
+        
+        <span><i class="fas fa-arrow-up"></i></span> 
+        
+        <span class="scrollpercent">
+            <span id="back_to_top_text">0</span>%
+         </span>
+    </div>
+</div>
+<script>
+    let sideBarOpen = 'sidebar-open';
+    let body = document.body;
+    let back2Top = document.querySelector('#back_to_top'),
+        back2TopText = document.querySelector('#back_to_top_text'),
+        drawerBox = document.querySelector('#drawer_box'),
+        rightSideBar = document.querySelector('.sidebar'),
+        viewport = document.querySelector('body');
+
+    function scrollAnimation(currentY, targetY) {
+
+        let needScrollTop = targetY - currentY
+        let _currentY = currentY
+        setTimeout(() => {
+            const dist = Math.ceil(needScrollTop / 10)
+            _currentY += dist
+            window.scrollTo(_currentY, currentY)
+            if (needScrollTop > 10 || needScrollTop < -10) {
+                scrollAnimation(_currentY, targetY)
+            } else {
+                window.scrollTo(_currentY, targetY)
+            }
+        }, 1)
+    }
+
+    back2Top.addEventListener("click", function (e) {
+        scrollAnimation(document.scrollingElement.scrollTop, 0);
+        e.stopPropagation();
+        return false;
+    });
+
+    window.addEventListener('scroll', function (e) {
+        let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+        if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+            back2Top.classList.add('back-top-active');
+        }
+        if (percent == 0) {
+            back2Top.classList.remove('back-top-active');
+        }
+        if (back2TopText) {
+            back2TopText.textContent = Math.floor(percent);
+        }
+    });
+    let hasCacu = false;
+    window.onresize = function () {
+        calcuHeight();
+    }
+</script>
+        </div>
+    </body>
+</html>

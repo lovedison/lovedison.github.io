@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Others on LoveDison&#39;s Blog</title>
+    <link>https://lovedison.cn/other/</link>
+    <description>Recent content in Others on LoveDison&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 25 Mar 2023 20:28:53 +0800</lastBuildDate><atom:link href="https://lovedison.cn/other/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bilibili天涯明月刀自制曲谱</title>
+      <link>https://lovedison.cn/other/bilibili-jiangnanqinshi-home/</link>
+      <pubDate>Sat, 25 Mar 2023 20:28:53 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/other/bilibili-jiangnanqinshi-home/</guid>
+      <description>B站UP主江南琴师：</description>
+    </item>
+    
+    <item>
+      <title>使用hugo写博客</title>
+      <link>https://lovedison.cn/other/write-blog-with-hugo/</link>
+      <pubDate>Sun, 18 Apr 2021 10:37:43 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/other/write-blog-with-hugo/</guid>
+      <description>本地运行hugo命令 hugo server 或者 hugo server -D 加上-D参数，可以显示草稿状态的文章。 本地浏览器访问 http://localhost:1313/ 即可看到博客。 写文章 通过下面命令新建文章，然后手动打</description>
+    </item>
+    
+  </channel>
+</rss>

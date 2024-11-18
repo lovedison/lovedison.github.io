@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on LoveDison&#39;s Blog</title>
+    <link>https://lovedison.cn/categories/</link>
+    <description>Recent content in Categories on LoveDison&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 18 Nov 2024 22:57:46 +0800</lastBuildDate><atom:link href="https://lovedison.cn/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mood</title>
+      <link>https://lovedison.cn/categories/mood/</link>
+      <pubDate>Mon, 18 Nov 2024 22:57:46 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/categories/mood/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>java</title>
+      <link>https://lovedison.cn/categories/java/</link>
+      <pubDate>Tue, 16 May 2023 20:37:19 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/categories/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tools</title>
+      <link>https://lovedison.cn/categories/tools/</link>
+      <pubDate>Mon, 15 May 2023 19:51:28 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/categories/tools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://lovedison.cn/categories/mysql/</link>
+      <pubDate>Sat, 25 Mar 2023 19:20:28 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/categories/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://lovedison.cn/categories/linux/</link>
+      <pubDate>Wed, 25 May 2022 14:20:54 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

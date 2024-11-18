@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tools on LoveDison&#39;s Blog</title>
+    <link>https://lovedison.cn/categories/tools/</link>
+    <description>Recent content in tools on LoveDison&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 15 May 2023 19:51:28 +0800</lastBuildDate><atom:link href="https://lovedison.cn/categories/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用PlantUML画图</title>
+      <link>https://lovedison.cn/2023/drawing-with-plantuml/</link>
+      <pubDate>Mon, 15 May 2023 19:51:28 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/2023/drawing-with-plantuml/</guid>
+      <description>PlantUML是一个开源项目，支持快速绘制： 时序图、用例图、类图、对象图、活动图、组件图、部署图、状态图和定时图。 中文官网地址： https://plantuml.com/zh/ 如果想绘</description>
+    </item>
+    
+    <item>
+      <title>使用hugo写博客</title>
+      <link>https://lovedison.cn/other/write-blog-with-hugo/</link>
+      <pubDate>Sun, 18 Apr 2021 10:37:43 +0800</pubDate>
+      
+      <guid>https://lovedison.cn/other/write-blog-with-hugo/</guid>
+      <description>本地运行hugo命令 hugo server 或者 hugo server -D 加上-D参数，可以显示草稿状态的文章。 本地浏览器访问 http://localhost:1313/ 即可看到博客。 写文章 通过下面命令新建文章，然后手动打</description>
+    </item>
+    
+  </channel>
+</rss>

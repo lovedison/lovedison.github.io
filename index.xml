@@ -1,60 +1,60 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LoveDison&#39;s Blog</title>
-    <link>https://lovedison.cn/</link>
+    <link>https://lovedison.github.io/</link>
     <description>Recent content on LoveDison&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 18 Nov 2024 22:57:46 +0800</lastBuildDate>
-    <atom:link href="https://lovedison.cn/" rel="self" type="application/rss+xml" />
+    <atom:link href="https://lovedison.github.io/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Moods</title>
-      <link>https://lovedison.cn/mood/</link>
+      <link>https://lovedison.github.io/mood/</link>
       <pubDate>Mon, 18 Nov 2024 22:57:46 +0800</pubDate>
       
-      <guid>https://lovedison.cn/mood/</guid>
+      <guid>https://lovedison.github.io/mood/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Posts</title>
-      <link>https://lovedison.cn/post/</link>
+      <link>https://lovedison.github.io/post/</link>
       <pubDate>Tue, 16 May 2023 20:37:19 +0800</pubDate>
       
-      <guid>https://lovedison.cn/post/</guid>
+      <guid>https://lovedison.github.io/post/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Books</title>
-      <link>https://lovedison.cn/book/</link>
+      <link>https://lovedison.github.io/book/</link>
       <pubDate>Sun, 23 Apr 2023 15:25:04 +0800</pubDate>
       
-      <guid>https://lovedison.cn/book/</guid>
+      <guid>https://lovedison.github.io/book/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Others</title>
-      <link>https://lovedison.cn/other/</link>
+      <link>https://lovedison.github.io/other/</link>
       <pubDate>Sat, 25 Mar 2023 20:28:53 +0800</pubDate>
       
-      <guid>https://lovedison.cn/other/</guid>
+      <guid>https://lovedison.github.io/other/</guid>
       <description></description>
     </item>
     
     <item>
       <title>关于作者</title>
-      <link>https://lovedison.cn/about-me/</link>
+      <link>https://lovedison.github.io/about-me/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://lovedison.cn/about-me/</guid>
+      <guid>https://lovedison.github.io/about-me/</guid>
       <description>&lt;ul&gt;
-&lt;li&gt;一枚良心有点不安的不务正业的码农。&lt;/li&gt;
+&lt;li&gt;一枚不务正业的码农。&lt;/li&gt;
 &lt;li&gt;爱好: 阅读,音乐,散步,旅行。说错了，爱好女人。算了，都不爱。&lt;/li&gt;
-&lt;li&gt;如果可以在晚风中听我讲一点废话，那是很浪漫的事。如果没有，我也可以独处一整天，一整年～&lt;/li&gt;
-&lt;li&gt;博客地址： &lt;a href=&#34;https://lovedison.cn/&#34;&gt;https://lovedison.cn/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;如果没人听我讲废话，我也可以独处一整天，一整年～&lt;/li&gt;
+&lt;li&gt;博客地址： &lt;a href=&#34;https://lovedison.github.io/&#34;&gt;https://lovedison.github.io/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;感谢你闯入我的世界&#34;&gt;感谢你闯入我的世界!&lt;/h3&gt;
 </description>
@@ -62,10 +62,10 @@
     
     <item>
       <title></title>
-      <link>https://lovedison.cn/archives/</link>
+      <link>https://lovedison.github.io/archives/</link>
       <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://lovedison.cn/archives/</guid>
+      <guid>https://lovedison.github.io/archives/</guid>
       <description></description>
     </item>
     

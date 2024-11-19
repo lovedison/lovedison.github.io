@@ -2,7 +2,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
-      <loc>https://lovedison.cn/</loc>
+      <loc>https://lovedison.github.io/</loc>
       
       <lastmod>2024-11-18T22:57:46+08:00</lastmod>
       
@@ -12,7 +12,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/categories/</loc>
+      <loc>https://lovedison.github.io/categories/</loc>
       
       <lastmod>2024-11-18T22:57:46+08:00</lastmod>
       
@@ -22,7 +22,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/tags/mood/</loc>
+      <loc>https://lovedison.github.io/tags/mood/</loc>
       
       <lastmod>2024-11-18T22:57:46+08:00</lastmod>
       
@@ -32,7 +32,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/categories/mood/</loc>
+      <loc>https://lovedison.github.io/categories/mood/</loc>
       
       <lastmod>2024-11-18T22:57:46+08:00</lastmod>
       
@@ -42,7 +42,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/mood/</loc>
+      <loc>https://lovedison.github.io/mood/</loc>
       
       <lastmod>2024-11-18T22:57:46+08:00</lastmod>
       
@@ -52,7 +52,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/tags/</loc>
+      <loc>https://lovedison.github.io/tags/</loc>
       
       <lastmod>2024-11-18T22:57:46+08:00</lastmod>
       
@@ -62,7 +62,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/mood/start-my-blog/</loc>
+      <loc>https://lovedison.github.io/mood/start-my-blog/</loc>
       
       <lastmod>2024-11-18T22:57:46+08:00</lastmod>
       
@@ -72,7 +72,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/tags/java/</loc>
+      <loc>https://lovedison.github.io/tags/java/</loc>
       
       <lastmod>2023-05-16T20:37:19+08:00</lastmod>
       
@@ -82,7 +82,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/categories/java/</loc>
+      <loc>https://lovedison.github.io/categories/java/</loc>
       
       <lastmod>2023-05-16T20:37:19+08:00</lastmod>
       
@@ -92,7 +92,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/java-concurrent-programming-lock/</loc>
+      <loc>https://lovedison.github.io/2023/java-concurrent-programming-lock/</loc>
       
       <lastmod>2023-05-16T20:37:19+08:00</lastmod>
       
@@ -102,7 +102,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/post/</loc>
+      <loc>https://lovedison.github.io/post/</loc>
       
       <lastmod>2023-05-16T20:37:19+08:00</lastmod>
       
@@ -112,7 +112,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/java-concurrent-programming-cas/</loc>
+      <loc>https://lovedison.github.io/2023/java-concurrent-programming-cas/</loc>
       
       <lastmod>2023-05-16T19:19:14+08:00</lastmod>
       
@@ -122,7 +122,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/uml-class-diagram/</loc>
+      <loc>https://lovedison.github.io/2023/uml-class-diagram/</loc>
       
       <lastmod>2023-05-15T20:10:16+08:00</lastmod>
       
@@ -132,7 +132,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/categories/tools/</loc>
+      <loc>https://lovedison.github.io/categories/tools/</loc>
       
       <lastmod>2023-05-15T19:51:28+08:00</lastmod>
       
@@ -142,7 +142,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/drawing-with-plantuml/</loc>
+      <loc>https://lovedison.github.io/2023/drawing-with-plantuml/</loc>
       
       <lastmod>2023-05-15T19:51:28+08:00</lastmod>
       
@@ -152,7 +152,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/java-multithreading/</loc>
+      <loc>https://lovedison.github.io/2023/java-multithreading/</loc>
       
       <lastmod>2023-05-13T09:54:18+08:00</lastmod>
       
@@ -162,7 +162,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/book/cognitive-awakening/</loc>
+      <loc>https://lovedison.github.io/book/cognitive-awakening/</loc>
       
       <lastmod>2023-04-23T15:25:04+08:00</lastmod>
       
@@ -172,7 +172,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/book/</loc>
+      <loc>https://lovedison.github.io/book/</loc>
       
       <lastmod>2023-04-23T15:25:04+08:00</lastmod>
       
@@ -182,7 +182,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/java-custom-annotation/</loc>
+      <loc>https://lovedison.github.io/2023/java-custom-annotation/</loc>
       
       <lastmod>2023-04-16T18:36:09+08:00</lastmod>
       
@@ -192,7 +192,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/java-reflection/</loc>
+      <loc>https://lovedison.github.io/2023/java-reflection/</loc>
       
       <lastmod>2023-04-15T11:32:19+08:00</lastmod>
       
@@ -202,7 +202,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/other/bilibili-jiangnanqinshi-home/</loc>
+      <loc>https://lovedison.github.io/other/bilibili-jiangnanqinshi-home/</loc>
       
       <lastmod>2023-03-25T20:28:53+08:00</lastmod>
       
@@ -212,7 +212,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/other/</loc>
+      <loc>https://lovedison.github.io/other/</loc>
       
       <lastmod>2023-03-25T20:28:53+08:00</lastmod>
       
@@ -222,7 +222,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/tags/mysql/</loc>
+      <loc>https://lovedison.github.io/tags/mysql/</loc>
       
       <lastmod>2023-03-25T19:20:28+08:00</lastmod>
       
@@ -232,7 +232,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/categories/mysql/</loc>
+      <loc>https://lovedison.github.io/categories/mysql/</loc>
       
       <lastmod>2023-03-25T19:20:28+08:00</lastmod>
       
@@ -242,7 +242,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2023/mysql-lock/</loc>
+      <loc>https://lovedison.github.io/2023/mysql-lock/</loc>
       
       <lastmod>2023-03-25T19:20:28+08:00</lastmod>
       
@@ -252,7 +252,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/tags/linux/</loc>
+      <loc>https://lovedison.github.io/tags/linux/</loc>
       
       <lastmod>2022-05-25T14:20:54+08:00</lastmod>
       
@@ -262,7 +262,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/categories/linux/</loc>
+      <loc>https://lovedison.github.io/categories/linux/</loc>
       
       <lastmod>2022-05-25T14:20:54+08:00</lastmod>
       
@@ -272,7 +272,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/2022/linux-environment-variables/</loc>
+      <loc>https://lovedison.github.io/2022/linux-environment-variables/</loc>
       
       <lastmod>2022-05-25T14:20:54+08:00</lastmod>
       
@@ -282,7 +282,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/book/the-effective-manager/</loc>
+      <loc>https://lovedison.github.io/book/the-effective-manager/</loc>
       
       <lastmod>2022-02-26T20:30:20+08:00</lastmod>
       
@@ -292,7 +292,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/book/the-power-of-ideas/</loc>
+      <loc>https://lovedison.github.io/book/the-power-of-ideas/</loc>
       
       <lastmod>2022-02-10T11:09:05+08:00</lastmod>
       
@@ -302,7 +302,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/other/write-blog-with-hugo/</loc>
+      <loc>https://lovedison.github.io/other/write-blog-with-hugo/</loc>
       
       <lastmod>2021-04-18T10:37:43+08:00</lastmod>
       
@@ -312,7 +312,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/about-me/</loc>
+      <loc>https://lovedison.github.io/about-me/</loc>
       
       <lastmod>2021-03-25T00:00:00+00:00</lastmod>
       
@@ -322,7 +322,7 @@
     </url>
   
     <url>
-      <loc>https://lovedison.cn/archives/</loc>
+      <loc>https://lovedison.github.io/archives/</loc>
       
       <lastmod>2019-05-28T00:00:00+00:00</lastmod>
       

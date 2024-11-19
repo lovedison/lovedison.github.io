@@ -2,89 +2,89 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on LoveDison&#39;s Blog</title>
-    <link>https://lovedison.cn/post/</link>
+    <link>https://lovedison.github.io/post/</link>
     <description>Recent content in Posts on LoveDison&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 16 May 2023 20:37:19 +0800</lastBuildDate><atom:link href="https://lovedison.cn/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 May 2023 20:37:19 +0800</lastBuildDate><atom:link href="https://lovedison.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java并发编程——锁分类</title>
-      <link>https://lovedison.cn/2023/java-concurrent-programming-lock/</link>
+      <link>https://lovedison.github.io/2023/java-concurrent-programming-lock/</link>
       <pubDate>Tue, 16 May 2023 20:37:19 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/java-concurrent-programming-lock/</guid>
+      <guid>https://lovedison.github.io/2023/java-concurrent-programming-lock/</guid>
       <description>按上锁方式划分 隐式锁：synchronized Java的关键字，是Java提供的同步机制 不需要显式的执行加锁和解锁过程 显式锁：JUC包中提供</description>
     </item>
     
     <item>
       <title>Java并发编程——CAS</title>
-      <link>https://lovedison.cn/2023/java-concurrent-programming-cas/</link>
+      <link>https://lovedison.github.io/2023/java-concurrent-programming-cas/</link>
       <pubDate>Tue, 16 May 2023 19:19:14 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/java-concurrent-programming-cas/</guid>
+      <guid>https://lovedison.github.io/2023/java-concurrent-programming-cas/</guid>
       <description>CAS是什么？ compare and swap 本质是一条CPU的原子指令，可以保证共享变量修改的原子性。 执行函数：CAS(V,E,N) 当且仅当内存地址V中的值等于 预期</description>
     </item>
     
     <item>
       <title>UML类图</title>
-      <link>https://lovedison.cn/2023/uml-class-diagram/</link>
+      <link>https://lovedison.github.io/2023/uml-class-diagram/</link>
       <pubDate>Mon, 15 May 2023 20:10:16 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/uml-class-diagram/</guid>
+      <guid>https://lovedison.github.io/2023/uml-class-diagram/</guid>
       <description>定义 UML即统一建模语言（Unified Modeling Language） 这种统一建模语言是由图表组成的。 常用的有：序列图、类图、状态图、对象图、组件图和</description>
     </item>
     
     <item>
       <title>使用PlantUML画图</title>
-      <link>https://lovedison.cn/2023/drawing-with-plantuml/</link>
+      <link>https://lovedison.github.io/2023/drawing-with-plantuml/</link>
       <pubDate>Mon, 15 May 2023 19:51:28 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/drawing-with-plantuml/</guid>
+      <guid>https://lovedison.github.io/2023/drawing-with-plantuml/</guid>
       <description>PlantUML是一个开源项目，支持快速绘制： 时序图、用例图、类图、对象图、活动图、组件图、部署图、状态图和定时图。 中文官网地址： https://plantuml.com/zh/ 如果想绘</description>
     </item>
     
     <item>
       <title>Java并发编程基础</title>
-      <link>https://lovedison.cn/2023/java-multithreading/</link>
+      <link>https://lovedison.github.io/2023/java-multithreading/</link>
       <pubDate>Sat, 13 May 2023 09:54:18 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/java-multithreading/</guid>
+      <guid>https://lovedison.github.io/2023/java-multithreading/</guid>
       <description>1 多线程相关概念 1.1 线程和进程 1.1.1 什么是线程？什么是进程？ 进程：是指内存中运行的一个应用程序，每个进程都有自己独立的内存空间；进程也是程序的一次</description>
     </item>
     
     <item>
       <title>Java自定义注解</title>
-      <link>https://lovedison.cn/2023/java-custom-annotation/</link>
+      <link>https://lovedison.github.io/2023/java-custom-annotation/</link>
       <pubDate>Sun, 16 Apr 2023 18:36:09 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/java-custom-annotation/</guid>
+      <guid>https://lovedison.github.io/2023/java-custom-annotation/</guid>
       <description>注解格式 //元注解 public @interface 注解名称 { 属性列表; } 注解本质上就是一个接口，该接口默认继承Annotation接口。任何注解默认继承Annotati</description>
     </item>
     
     <item>
       <title>Java反射</title>
-      <link>https://lovedison.cn/2023/java-reflection/</link>
+      <link>https://lovedison.github.io/2023/java-reflection/</link>
       <pubDate>Sat, 15 Apr 2023 11:32:19 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/java-reflection/</guid>
+      <guid>https://lovedison.github.io/2023/java-reflection/</guid>
       <description>反射(Reflection) 允许运行中的Java 程序获取自身的信息，并且可以操作类或对象的内部属性。 反射的核心是 JVM 在运行时才动态加载类或调用</description>
     </item>
     
     <item>
       <title>Mysql锁分析</title>
-      <link>https://lovedison.cn/2023/mysql-lock/</link>
+      <link>https://lovedison.github.io/2023/mysql-lock/</link>
       <pubDate>Sat, 25 Mar 2023 19:20:28 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2023/mysql-lock/</guid>
+      <guid>https://lovedison.github.io/2023/mysql-lock/</guid>
       <description>一般处理并发问题会设计两种锁， 共享锁(shared lock)，S锁，也叫读锁(read lock)。 排他锁(exclusive lock)，X锁</description>
     </item>
     
     <item>
       <title>Linux环境变量</title>
-      <link>https://lovedison.cn/2022/linux-environment-variables/</link>
+      <link>https://lovedison.github.io/2022/linux-environment-variables/</link>
       <pubDate>Wed, 25 May 2022 14:20:54 +0800</pubDate>
       
-      <guid>https://lovedison.cn/2022/linux-environment-variables/</guid>
+      <guid>https://lovedison.github.io/2022/linux-environment-variables/</guid>
       <description>对于linux或者mac，bash是用户和系统交互的最基本的脚本环境。 而**zsh（Z shell）**是bash的一个替代品，他对于bash</description>
     </item>
     

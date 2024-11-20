@@ -10,8 +10,8 @@
     
     
     
-    <link rel="next" href="https://lovedison.cn/other/bilibili-jiangnanqinshi-home/" />
-    <link rel="canonical" href="https://lovedison.cn/other/write-blog-with-hugo/" />
+    
+    <link rel="canonical" href="https://lovedison.cn/categories/movie/" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,44 +22,20 @@
     <title>
         
         
-            使用hugo写博客 | LoveDison&#39;s Blog
+            movie | LoveDison&#39;s Blog
         
     </title>
-    <meta name="title" content="使用hugo写博客 | LoveDison&#39;s Blog">
+    <meta name="title" content="movie | LoveDison&#39;s Blog">
     
 <link rel="stylesheet" href="/css/main.min.css">
 
 
     
+    <link rel="alternate" href="/categories/movie/index.xml" type="application/rss+xml" title="LoveDison&#39;s Blog">
+    <link rel="feed" href="/categories/movie/index.xml" type="application/rss+xml" title="LoveDison&#39;s Blog">
+    
     
  
-
-<script type="application/ld+json">
-{
-    "@context" : "http://schema.org",
-    "@type" : "BlogPosting",
-    "mainEntityOfPage": {
-         "@type": "WebPage",
-         "@id": "https:\/\/lovedison.cn"
-    },
-    "articleSection" : "other",
-    "name" : "使用hugo写博客",
-    "headline" : "使用hugo写博客",
-    "description" : "本地运行hugo命令 hugo server 或者 hugo server -D 加上-D参数，可以显示草稿状态的文章。 本地浏览器访问 http:\/\/localhost:1313\/ 即可看到博客。 写文章 通过下面命令新建文章，然后手动打",
-    "inLanguage" : "zh-cn",
-    "author" : "Dison",
-    "creator" : "Dison",
-    "publisher": "Dison",
-    "accountablePerson" : "Dison",
-    "copyrightHolder" : "Dison",
-    "copyrightYear" : "2021",
-    "datePublished": "2021-04-18 10:37:43 \u002b0800 CST",
-    "dateModified" : "2021-04-18 10:37:43 \u002b0800 CST",
-    "url" : "https:\/\/lovedison.cn\/other\/write-blog-with-hugo\/",
-    "wordCount" : "204",
-    "keywords" : [  "LoveDison\u0027s Blog"]
-}
-</script>
 
   </head>
 
@@ -71,8 +47,6 @@
     <body class="">
         <div class="wrapper">
             <nav class="navbar">
-    
-        <progress class="content_progress" max="0" value="0"></progress>
     
     <div class="container">
         
@@ -111,8 +85,6 @@
     </div>
 </nav>
 <nav class="navbar-mobile" id="nav-mobile" style="display: none">
-    
-        <progress class="content_progress" max="0" value="0"></progress>
     
      <div class="container">
         <div class="navbar">
@@ -178,102 +150,23 @@
             <main class="main">
                 <div class="container">
                     
-<article class="post-warp" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">使用hugo写博客</h1>
-        <div class="post-meta">
-                Written by <a itemprop="name" href="https://lovedison.cn" rel="author">Dison</a>
-                <span class="post-time">
-                on <time datetime=2021-04-18 itemprop="datePublished">April 18, 2021</time>
-                </span>
-                in
-                
-                <i class="iconfont icon-folder"></i>
-                <span class="post-category">
-                        
-                        
-                        
-                          <a href="https://lovedison.cn/categories/tools/"> tools, </a>
-                        
-                        
-                </span>
-                <span class="post-word-count">204 words</span>
-        </div>
-    </header>
-
-    <div class="post-content">
-        
-
-        
-        
-
-        
-        
-        
-        
-        
-
-        
-        
-        
-
-        <h3 id="本地运行hugo命令">本地运行hugo命令</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo server
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>或者
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>hugo server -D
-</span></span></code></pre></div><p>加上-D参数，可以显示草稿状态的文章。</p>
-<p>本地浏览器访问 <a href="https://d-xingxing.cn/">http://localhost:1313/</a> 即可看到博客。</p>
-<h3 id="写文章">写文章</h3>
-<p>通过下面命令新建文章，然后手动打开编辑该文件即可，每次保存文章，浏览器会自动重新渲染。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo new tech/MyBlog.md
-</span></span></code></pre></div><h3 id="发布博客">发布博客</h3>
-<p>将需要发布的文章的内容里draft: false标识的值改为true，然后运行下面命令</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo
-</span></span></code></pre></div><p>会生成静态文件到public目录，最后将这些静态博客文件推送到github page或者自己的静态文件服务器上即可。</p>
-
-    </div>
-
-    <div class="post-copyright">
-            
-            <p class="copyright-item">
-                <span>Author:</span>
-                <span>Dison </span>
-                </p>
-            
-
-            
-            <p class="copyright-item">
-                    <span>Link:</span>
-                    <a href=https://lovedison.cn/other/write-blog-with-hugo/>https://lovedison.cn/other/write-blog-with-hugo/</span>
-            </p>
-            
-            
-    </div>
 
 
-    <div class="post-tags">
-        
-        <section>
-                <a href="javascript:window.history.back();">back</a></span> ·
-                <span><a href="https://lovedison.cn">home</a></span>
-        </section>
-    </div>
 
-    <div class="post-nav">
-        
-        
-        <a href="https://lovedison.cn/other/bilibili-jiangnanqinshi-home/" class="next" rel="next" title="Bilibili天涯明月刀自制曲谱">Bilibili天涯明月刀自制曲谱&nbsp;<i class="iconfont icon-right"></i></a>
-        
-    </div>
+<div class="post-warp archive">
+    <h2 class="post-title" style="text-align:right;padding-bottom:2em">-&nbsp;Categories&nbsp;·&nbsp;movie&nbsp;-</h2>
+    
+    <article class="archive-item">
+        <a href="https://lovedison.cn/movie/her-story/" class="archive-item-link hvr-underline-from-center">《好东西》</a>
+        <span class="archive-item-date">
+            November 20, 2024
+        </span>
+    </article>
+     
+    
 
-    <div class="post-comment">
-        
-            
-        
-    </div>
-</article>
+</div>
+
                 </div>
             </main>
             

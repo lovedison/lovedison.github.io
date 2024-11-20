@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Dison">
+    <meta name="description" content="Dison 的个人博客">
+    
+    
+    <link rel="prev" href="https://lovedison.cn/tech/drawing-with-plantuml/" />
+    <link rel="next" href="https://lovedison.cn/tech/java-concurrent-programming-cas/" />
+    <link rel="canonical" href="https://lovedison.cn/tech/uml-class-diagram/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            UML类图 | LoveDison&#39;s Blog
+        
+    </title>
+    <meta name="title" content="UML类图 | LoveDison&#39;s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/lovedison.cn"
+    },
+    "articleSection" : "tech",
+    "name" : "UML类图",
+    "headline" : "UML类图",
+    "description" : "定义 UML即统一建模语言（Unified Modeling Language） 这种统一建模语言是由图表组成的。 常用的有：序列图、类图、状态图、对象图、组件图和",
+    "inLanguage" : "zh-cn",
+    "author" : "Dison",
+    "creator" : "Dison",
+    "publisher": "Dison",
+    "accountablePerson" : "Dison",
+    "copyrightHolder" : "Dison",
+    "copyrightYear" : "2023",
+    "datePublished": "2023-05-15 20:10:16 \u002b0800 CST",
+    "dateModified" : "2023-05-15 20:10:16 \u002b0800 CST",
+    "url" : "https:\/\/lovedison.cn\/tech\/uml-class-diagram\/",
+    "wordCount" : "825",
+    "keywords" : [ "java", "LoveDison\u0027s Blog"]
+}
+</script>
+
+  </head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://lovedison.cn">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/tech/" title="">技术</a>
+                
+                <a class="menu-item" href="/mood/" title="">心情</a>
+                
+                <a class="menu-item" href="/book/" title="">读书</a>
+                
+                <a class="menu-item" href="/-movie/" title="">电影</a>
+                
+                <a class="menu-item" href="/other/" title="">工具</a>
+                
+                <a class="menu-item" href="/categories/" title="">目录</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/about-me/" title="">关于我</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://lovedison.cn">LoveDison&#39;s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/tech/" title="">
+                            <h3>技术</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/mood/" title="">
+                            <h3>心情</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/book/" title="">
+                            <h3>读书</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/-movie/" title="">
+                            <h3>电影</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/other/" title="">
+                            <h3>工具</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>目录</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>标签</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about-me/" title="">
+                            <h3>关于我</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">UML类图</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://lovedison.cn" rel="author">Dison</a>
+                <span class="post-time">
+                on <time datetime=2023-05-15 itemprop="datePublished">May 15, 2023</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://lovedison.cn/categories/java/"> java, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">825 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+            
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="定义">定义</h2>
+<p>UML即统一建模语言（Unified Modeling Language）</p>
+<ul>
+<li>这种统一建模语言是由图表组成的。</li>
+<li>常用的有：序列图、类图、状态图、对象图、组件图和部署图等</li>
+</ul>
+<h2 id="类之间的关系">类之间的关系</h2>
+<h3 id="泛化generalization">泛化（Generalization）</h3>
+<ul>
+<li>在Java中也叫作继承关系</li>
+<li>空心三角箭头</li>
+<li>Studen类，警察Policemen类，均继承自Person类
+<img src="..%2F..%2Fpost%2FGeneralization.png" alt="Generalization.png" loading="lazy" ></li>
+</ul>
+<h3 id="实现realization">实现（Realization）</h3>
+<ul>
+<li>Java中类与接口的实现关系</li>
+<li>空心三角箭头加虚线</li>
+<li>由于Student和Policeman都是职业，学生的职业就是学习，而警察的职业为保护人民。所有定义一个职业接口。
+<img src="..%2F..%2Fpost%2FRealization.png" alt="Realization.png" loading="lazy" ></li>
+</ul>
+<h3 id="依赖dependence">依赖（Dependence）</h3>
+<ul>
+<li>依赖关系是一种很弱的关系，一般是指一个类使用另一个类</li>
+<li>带箭头的虚线</li>
+<li>这里学生捡到钱交给警察叔叔，学生和警察叔叔就是一种依赖关系。
+因为学生捡到钱给警察是一种偶然的事情，交给警察后他们之间就没有关系了。
+<img src="..%2F..%2Fpost%2FDependence.png" alt="Dependence.png" loading="lazy" ></li>
+</ul>
+<h3 id="关联association">关联（Association）</h3>
+<ul>
+<li>
+<p>比较强的关系，他们的关系是比较持久的，稳定的（一个类作为另一个类的属性）</p>
+</li>
+<li>
+<p>分单向关联和双向关联</p>
+</li>
+<li>
+<p>单向关联：带箭头的实线
+<img src="..%2F..%2Fpost%2FAssociation.png" alt="Association.png" loading="lazy" ></p>
+<p><img src="..%2F..%2Fpost%2FAssociation2.png" alt="Association2.png" loading="lazy" ></p>
+</li>
+</ul>
+<h3 id="聚合aggregation">聚合（Aggregation）</h3>
+<ul>
+<li>特殊的关联关系（强调整体和部分的关系，部分可以脱离整体而存在）</li>
+<li>带空心菱形的实线（其中菱形指向整体）</li>
+<li>警察与制服的关系，制服也是警察的一部分，制服可以脱离警察而存在
+<img src="../../post/Aggregation.png" alt="Aggregation.png" loading="lazy" ></li>
+</ul>
+<h3 id="组合composition">组合（Composition）</h3>
+<ul>
+<li>特殊的关联关系（强调整体和部分的关系，部分无法脱离整体存在）</li>
+<li>带空心菱形的实线（其中菱形指向整体）</li>
+<li>学生用手捡钱，其中手就是学生的一部分，但是手不能脱离学生而单独存在
+<img src="..%2F..%2Fpost%2FComposition.png" alt="Composition.png" loading="lazy" ></li>
+</ul>
+<h3 id="按关系强度组合聚合关联依赖">按关系强度：组合&gt;聚合&gt;关联&gt;依赖。</h3>
+<p><img src="..%2F..%2Fpost%2FUML%E7%B1%BB%E5%9B%BE.png" alt="UML类图.png" loading="lazy" ></p>
+<ul>
+<li>图是用PlantUML画的</li>
+</ul>
+<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startuml
+interface ICareer {
+    +career()
+}
+
+class Persion {
+    -name:String
+    -age:Integer = 1
+    +setName(String name):void
+    +getName():String
+    +setAge(String age):void
+    +getAge():String
+}
+
+class Student {
+    +policeman:Policeman
+    +teacher:Teacher
+    +home:Home
+    +hand:Hand
+    +sendCoin()
+}
+
+class Hand {
+}
+
+class Home {
+}
+
+class Teacher {
+    +student:Student
+}
+
+class Policeman {
+    +uniform:Uniform
+    +receiveCoin()
+}
+
+class Uniform {
+}
+
+ICareer &lt;|.down. Student:实现
+ICareer &lt;|.down. Policeman:实现
+
+Persion &lt;|-down- Student:继承
+Persion &lt;|-down- Policeman:继承
+
+Student .&gt; Policeman:依赖
+Student -left&gt; Home:单向关联
+Student -left Teacher:双向关联
+Student *-down- Hand:组合
+
+Uniform -up-o Policeman:聚合
+@enduml
+</code></pre>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Dison </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://lovedison.cn/tech/uml-class-diagram/>https://lovedison.cn/tech/uml-class-diagram/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://lovedison.cn/tags/java/">
+                    #java</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://lovedison.cn">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://lovedison.cn/tech/drawing-with-plantuml/" class="prev" rel="prev" title="使用PlantUML画图"><i class="iconfont icon-left"></i>&nbsp;使用PlantUML画图</a>
+        
+        
+        <a href="https://lovedison.cn/tech/java-concurrent-programming-cas/" class="next" rel="next" title="Java并发编程——CAS">Java并发编程——CAS&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            
+<div class="footer-box">
+    <footer class="footer">
+        <div class="copyright">
+            &copy;
+            
+            <span itemprop="copyrightYear">2020 - 2024</span>
+            
+            <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+            
+            <span class="author" itemprop="copyrightHolder"><a href="https://lovedison.cn">Dison</a> | </span>
+            
+
+            
+        </div>
+    </footer>
+    
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/love.min.js"></script>
+
+
+
+
+    
+    <div class="back-to-top" id="back_to_top">
+        
+        
+        
+        <span><i class="fas fa-arrow-up"></i></span> 
+        
+        <span class="scrollpercent">
+            <span id="back_to_top_text">0</span>%
+         </span>
+    </div>
+</div>
+<script>
+    let sideBarOpen = 'sidebar-open';
+    let body = document.body;
+    let back2Top = document.querySelector('#back_to_top'),
+        back2TopText = document.querySelector('#back_to_top_text'),
+        drawerBox = document.querySelector('#drawer_box'),
+        rightSideBar = document.querySelector('.sidebar'),
+        viewport = document.querySelector('body');
+
+    function scrollAnimation(currentY, targetY) {
+
+        let needScrollTop = targetY - currentY
+        let _currentY = currentY
+        setTimeout(() => {
+            const dist = Math.ceil(needScrollTop / 10)
+            _currentY += dist
+            window.scrollTo(_currentY, currentY)
+            if (needScrollTop > 10 || needScrollTop < -10) {
+                scrollAnimation(_currentY, targetY)
+            } else {
+                window.scrollTo(_currentY, targetY)
+            }
+        }, 1)
+    }
+
+    back2Top.addEventListener("click", function (e) {
+        scrollAnimation(document.scrollingElement.scrollTop, 0);
+        e.stopPropagation();
+        return false;
+    });
+
+    window.addEventListener('scroll', function (e) {
+        let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+        if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+            back2Top.classList.add('back-top-active');
+        }
+        if (percent == 0) {
+            back2Top.classList.remove('back-top-active');
+        }
+        if (back2TopText) {
+            back2TopText.textContent = Math.floor(percent);
+        }
+    });
+    let hasCacu = false;
+    window.onresize = function () {
+        calcuHeight();
+    }
+</script>
+        </div>
+    </body>
+</html>

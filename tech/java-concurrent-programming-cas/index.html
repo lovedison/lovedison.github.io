@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Dison">
+    <meta name="description" content="Dison 的个人博客">
+    
+    
+    <link rel="prev" href="https://lovedison.cn/tech/uml-class-diagram/" />
+    <link rel="next" href="https://lovedison.cn/tech/java-concurrent-programming-lock/" />
+    <link rel="canonical" href="https://lovedison.cn/tech/java-concurrent-programming-cas/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+            Java并发编程——CAS | LoveDison&#39;s Blog
+        
+    </title>
+    <meta name="title" content="Java并发编程——CAS | LoveDison&#39;s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/lovedison.cn"
+    },
+    "articleSection" : "tech",
+    "name" : "Java并发编程——CAS",
+    "headline" : "Java并发编程——CAS",
+    "description" : "CAS是什么？ compare and swap 本质是一条CPU的原子指令，可以保证共享变量修改的原子性。 执行函数：CAS(V,E,N) 当且仅当内存地址V中的值等于 预期",
+    "inLanguage" : "zh-cn",
+    "author" : "Dison",
+    "creator" : "Dison",
+    "publisher": "Dison",
+    "accountablePerson" : "Dison",
+    "copyrightHolder" : "Dison",
+    "copyrightYear" : "2023",
+    "datePublished": "2023-05-16 19:19:14 \u002b0800 CST",
+    "dateModified" : "2023-05-16 19:19:14 \u002b0800 CST",
+    "url" : "https:\/\/lovedison.cn\/tech\/java-concurrent-programming-cas\/",
+    "wordCount" : "1136",
+    "keywords" : [ "java", "LoveDison\u0027s Blog"]
+}
+</script>
+
+  </head>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://lovedison.cn">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/tech/" title="">技术</a>
+                
+                <a class="menu-item" href="/mood/" title="">心情</a>
+                
+                <a class="menu-item" href="/book/" title="">读书</a>
+                
+                <a class="menu-item" href="/-movie/" title="">电影</a>
+                
+                <a class="menu-item" href="/other/" title="">工具</a>
+                
+                <a class="menu-item" href="/categories/" title="">目录</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/about-me/" title="">关于我</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://lovedison.cn">LoveDison&#39;s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/tech/" title="">
+                            <h3>技术</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/mood/" title="">
+                            <h3>心情</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/book/" title="">
+                            <h3>读书</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/-movie/" title="">
+                            <h3>电影</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/other/" title="">
+                            <h3>工具</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>目录</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>标签</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about-me/" title="">
+                            <h3>关于我</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Java并发编程——CAS</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://lovedison.cn" rel="author">Dison</a>
+                <span class="post-time">
+                on <time datetime=2023-05-16 itemprop="datePublished">May 16, 2023</time>
+                </span>
+                in
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        
+                        
+                        
+                          <a href="https://lovedison.cn/categories/java/"> java, </a>
+                        
+                        
+                </span>
+                <span class="post-word-count">1136 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="cas是什么">CAS是什么？</h2>
+<ul>
+<li><code>compare and swap</code></li>
+<li><strong>本质是一条CPU的原子指令，可以保证共享变量修改的原子性。</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>执行函数：CAS<span style="color:#f92672">(</span>V,E,N<span style="color:#f92672">)</span>
+</span></span></code></pre></div><ul>
+<li>当且仅当<strong>内存地址V</strong>中的值等于 <strong>预期值E</strong> 时，将内存V中的值改为N，否则会进行自旋操作（一般情况
+下），即不断的重试。</li>
+</ul>
+<h2 id="java中对cas的实现">Java中对CAS的实现</h2>
+<ul>
+<li>Java不能像C/C++那样直接操作内存区域，需要通过本地方法(native方法)来访问。JAVA中的CAS操作都
+是通过sun包下Unsafe类实（sun.misc.Unsafe），而Unsafe类中的方法都是native方法。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">//offset：内存偏移量，offset 为o对象所属类中，某个属性在类中的内存地址偏移量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">native</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">compareAndSwapInt</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">,</span><span style="color:#66d9ef">long</span> offset<span style="color:#f92672">,</span><span style="color:#66d9ef">int</span> expected<span style="color:#f92672">,</span><span style="color:#66d9ef">int</span> x<span style="color:#f92672">);</span>
+</span></span></code></pre></div><ul>
+<li><code>compareAndSwapInt</code>在看openJDK8的源码中位置：
+<ul>
+<li><code>openjdk8/hotspot/src/share/vm/prims/unsafe.cpp</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="cas缺陷">CAS缺陷</h2>
+<ol>
+<li>自旋开销（循环时间太长）
+<ul>
+<li>原子类AtomicInteger#getAndIncrement()的方法</li>
+</ul>
+</li>
+<li>只能保证一个共享变量的原子操作</li>
+<li>ABA问题
+<ul>
+<li>如果一个值原来是A，变成了B，然后又变成了A，那么在CAS检查的时候会发现没有改变，但
+是实质上它已经发生了改变，这就是所谓的ABA问题</li>
+<li>解决方案：加版本号（类似于乐观锁）。即
+在每个变量绑定一个版本号，每次改变时加1，即A —&gt; B —&gt; A，变成1A —&gt; 2B —&gt; 3A。
+<ul>
+<li>例如为了消除原子类<code>AtomicInteger ar = new AtomicInteger(100);</code>的ABA问题，
+可以改用<code>AtomicStampedReference&lt;Integer&gt; asr = new AtomicStampedReference&lt;&gt;(100, 1);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="原子变量类">原子变量类</h2>
+<ul>
+<li><code>java.util.concurrent.atomic</code>包
+<ul>
+<li>用法简单、性能高效、线程安全地更新一个变量的方式</li>
+<li>可以解决volatile原子性操作变量的问题</li>
+<li>Atomic包里的类基本都是使用Unsafe实现的包装类</li>
+</ul>
+</li>
+</ul>
+<h3 id="atomic常用类">Atomic常用类</h3>
+<ul>
+<li>基本类型
+<ul>
+<li><code>AtomicInteger</code></li>
+<li>AtomicLong</li>
+<li>AtomicBoolean</li>
+</ul>
+</li>
+<li>引用类型
+<ul>
+<li>AtomicReference</li>
+<li><code>AtomicStampedReference</code></li>
+<li><code>AtomicMarkableReference</code></li>
+</ul>
+</li>
+<li>数组类型
+<ul>
+<li>AtomicIntegerArray</li>
+<li>AtomicLongArray</li>
+<li>AtomicReferenceArray</li>
+</ul>
+</li>
+<li>对象的属性修改类型
+<ul>
+<li>AtomicIntegerFieldUpdater</li>
+<li>AtomicLongFieldUpdater</li>
+<li>AtomicReferenceFieldUpdater</li>
+</ul>
+</li>
+</ul>
+<h3 id="atomicinteger主要api">AtomicInteger主要API</h3>
+<ul>
+<li>1
+<ul>
+<li>get()：获取当前值</li>
+<li>getAndAdd(int delta)：获取当前值，并加上预期的值</li>
+<li>getAndSet(int newValue)：获取当前值，并设置新值</li>
+<li><code>getAndIncrement()</code>：获取当前值，并自增</li>
+<li>getAndDecrement()：获取当前值，并自减</li>
+</ul>
+</li>
+<li>2
+<ul>
+<li>addAndGet(int delta)：加上预期的值，返回增加后的数据</li>
+<li><code>incrementAndGet()</code>：增加1，返回增加后的值</li>
+<li>decrementAndGet()：减少1，返回减少后的值</li>
+<li>lazySet(int newValue)：仅仅当get时才会set</li>
+</ul>
+</li>
+<li>3 <code>compareAndSet(int expect, int update)</code>：尝试新增后对比，若增加成功则返回true否则返回false</li>
+</ul>
+<h4 id="demo">demo</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Demo</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        VolatileDemo demo <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> VolatileDemo<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            Thread t <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span>demo<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>            t<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1000</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;count = &#34;</span> <span style="color:#f92672">+</span> demo<span style="color:#f92672">.</span><span style="color:#a6e22e">count</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VolatileDemo</span> <span style="color:#66d9ef">implements</span> Runnable <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> AtomicInteger count <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AtomicInteger<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            addCount<span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10000</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                count<span style="color:#f92672">.</span><span style="color:#a6e22e">incrementAndGet</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Dison </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://lovedison.cn/tech/java-concurrent-programming-cas/>https://lovedison.cn/tech/java-concurrent-programming-cas/</span>
+            </p>
+            
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://lovedison.cn/tags/java/">
+                    #java</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://lovedison.cn">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://lovedison.cn/tech/uml-class-diagram/" class="prev" rel="prev" title="UML类图"><i class="iconfont icon-left"></i>&nbsp;UML类图</a>
+        
+        
+        <a href="https://lovedison.cn/tech/java-concurrent-programming-lock/" class="next" rel="next" title="Java并发编程——锁分类">Java并发编程——锁分类&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            
+<div class="footer-box">
+    <footer class="footer">
+        <div class="copyright">
+            &copy;
+            
+            <span itemprop="copyrightYear">2020 - 2024</span>
+            
+            <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+            
+            <span class="author" itemprop="copyrightHolder"><a href="https://lovedison.cn">Dison</a> | </span>
+            
+
+            
+        </div>
+    </footer>
+    
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/love.min.js"></script>
+
+
+
+
+    
+    <div class="back-to-top" id="back_to_top">
+        
+        
+        
+        <span><i class="fas fa-arrow-up"></i></span> 
+        
+        <span class="scrollpercent">
+            <span id="back_to_top_text">0</span>%
+         </span>
+    </div>
+</div>
+<script>
+    let sideBarOpen = 'sidebar-open';
+    let body = document.body;
+    let back2Top = document.querySelector('#back_to_top'),
+        back2TopText = document.querySelector('#back_to_top_text'),
+        drawerBox = document.querySelector('#drawer_box'),
+        rightSideBar = document.querySelector('.sidebar'),
+        viewport = document.querySelector('body');
+
+    function scrollAnimation(currentY, targetY) {
+
+        let needScrollTop = targetY - currentY
+        let _currentY = currentY
+        setTimeout(() => {
+            const dist = Math.ceil(needScrollTop / 10)
+            _currentY += dist
+            window.scrollTo(_currentY, currentY)
+            if (needScrollTop > 10 || needScrollTop < -10) {
+                scrollAnimation(_currentY, targetY)
+            } else {
+                window.scrollTo(_currentY, targetY)
+            }
+        }, 1)
+    }
+
+    back2Top.addEventListener("click", function (e) {
+        scrollAnimation(document.scrollingElement.scrollTop, 0);
+        e.stopPropagation();
+        return false;
+    });
+
+    window.addEventListener('scroll', function (e) {
+        let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+        if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+            back2Top.classList.add('back-top-active');
+        }
+        if (percent == 0) {
+            back2Top.classList.remove('back-top-active');
+        }
+        if (back2TopText) {
+            back2TopText.textContent = Math.floor(percent);
+        }
+    });
+    let hasCacu = false;
+    window.onresize = function () {
+        calcuHeight();
+    }
+</script>
+        </div>
+    </body>
+</html>

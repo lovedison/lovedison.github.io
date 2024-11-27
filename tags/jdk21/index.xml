@@ -1,20 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>jdk21 on LoveDison&#39;s Blog</title>
-    <link>https://lovedison.cn/tags/jdk21/</link>
-    <description>Recent content in jdk21 on LoveDison&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Nov 2024 12:34:41 +0800</lastBuildDate><atom:link href="https://lovedison.cn/tags/jdk21/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Java21</title>
-      <link>https://lovedison.cn/tech/java21/</link>
-      <pubDate>Wed, 20 Nov 2024 12:34:41 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/tech/java21/</guid>
-      <description>todo</description>
-    </item>
-    
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>jdk21 - Tag - Dison的博客</title>
+        <link>https://lovedison.cn/tags/jdk21/</link>
+        <description>jdk21 - Tag - Dison的博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 Nov 2024 12:34:41 &#43;0800</lastBuildDate><atom:link href="https://lovedison.cn/tags/jdk21/" rel="self" type="application/rss+xml" /><item>
+    <title>Java21</title>
+    <link>https://lovedison.cn/posts/java21/</link>
+    <pubDate>Wed, 20 Nov 2024 12:34:41 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java21/</guid>
+    <description><![CDATA[todo]]></description>
+</item>
+</channel>
 </rss>

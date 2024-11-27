@@ -1,75 +1,89 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>LoveDison&#39;s Blog</title>
-    <link>https://lovedison.cn/</link>
-    <description>Recent content on LoveDison&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sun, 24 Nov 2024 22:42:54 +0800</lastBuildDate>
-    <atom:link href="https://lovedison.cn/" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>Moods</title>
-      <link>https://lovedison.cn/mood/</link>
-      <pubDate>Sun, 24 Nov 2024 22:42:54 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/mood/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Teches</title>
-      <link>https://lovedison.cn/tech/</link>
-      <pubDate>Wed, 20 Nov 2024 12:34:41 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/tech/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>About me</title>
-      <link>https://lovedison.cn/about-me/</link>
-      <pubDate>Wed, 20 Nov 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://lovedison.cn/about-me/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;locate:杭州,天津&lt;/li&gt;
-&lt;li&gt;a coder，tech stack: Java-based&lt;/li&gt;
-&lt;li&gt;Hobbies:Reading, Music, Travelling&lt;/li&gt;
-&lt;li&gt;INFJ&lt;/li&gt;
-&lt;li&gt;address: &lt;a href=&#34;https://lovedison.cn&#34;&gt;https://lovedison.cn&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;写博客的目的：记录当下的心情和学习成长的过程，练习表达能力并作为一种发泄，以后视情况重新整理移作他用。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;thank-you-for-barging-into-my-world&#34;&gt;Thank you for barging into my world.&lt;/h3&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Books</title>
-      <link>https://lovedison.cn/book/</link>
-      <pubDate>Sun, 23 Apr 2023 15:25:04 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/book/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Others</title>
-      <link>https://lovedison.cn/other/</link>
-      <pubDate>Sat, 25 Mar 2023 20:28:53 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/other/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://lovedison.cn/archives/</link>
-      <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://lovedison.cn/archives/</guid>
-      <description></description>
-    </item>
-    
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Dison的博客</title>
+        <link>https://lovedison.cn/</link>
+        <description>这是我的全新 Hugo 网站</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language>
+            <atom:link href="https://lovedison.cn/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>将Hugo博客主题修改为LoveIt</title>
+    <link>https://lovedison.cn/posts/2024-11-27%E5%B0%86hugo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E4%B8%BAloveit/</link>
+    <pubDate>Wed, 27 Nov 2024 10:02:34 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/2024-11-27%E5%B0%86hugo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E4%B8%BAloveit/</guid>
+    <description><![CDATA[调研 首先，在调研了好几个blog tools之后，还是hugo作为静态博客，优势巨大。主题方面，mogege已经很久没人维护了。 Hugo 主题推荐 对比]]></description>
+</item>
+<item>
+    <title>电影《好东西》观后感</title>
+    <link>https://lovedison.cn/posts/movie-her-story/</link>
+    <pubDate>Sun, 24 Nov 2024 22:42:54 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/movie-her-story/</guid>
+    <description><![CDATA[今晚去电影院看了这个电影，整理一下心情。 看的原因，被推荐，评分高，当然，让我说看就看的还得是有人陪同，否则可能只有《肖申克的救赎》这种级别的]]></description>
+</item>
+<item>
+    <title>The Road Not Taken</title>
+    <link>https://lovedison.cn/posts/the-road-not-taken/</link>
+    <pubDate>Sat, 23 Nov 2024 23:21:11 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/the-road-not-taken/</guid>
+    <description><![CDATA[未 选 择 的 路 —— 罗伯特·弗罗斯特 黄色的树林里分出两条路， 可惜我不能同时去涉足， 我在那路口久久伫立， 我向着一条路极目望去， 直到它消失在丛林深处。]]></description>
+</item>
+<item>
+    <title>让人越活越愉悦的30件小事</title>
+    <link>https://lovedison.cn/posts/make-living-more-pleasant/</link>
+    <pubDate>Wed, 20 Nov 2024 10:21:27 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/make-living-more-pleasant/</guid>
+    <description><![CDATA[最近看到一篇文章，觉得说的有道理，copy到这里了，什么时候回头再反思下。 原文地址： https://zhuanlan.zhihu.com/p/442594160 “没有人可以回到过去重新开始，但每个人都可以从现在开始]]></description>
+</item>
+<item>
+    <title>还是写博客吧</title>
+    <link>https://lovedison.cn/posts/start-my-blog/</link>
+    <pubDate>Mon, 18 Nov 2024 22:57:46 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/start-my-blog/</guid>
+    <description><![CDATA[我有罪 人必须对自己诚实 我总是浪费了很多的时间 如果我有遗憾，那是我自己的问题 我不得不承认我过的有点舒服，良心不安]]></description>
+</item>
+<item>
+    <title>Java并发编程——锁分类</title>
+    <link>https://lovedison.cn/posts/java-concurrent-programming-lock/</link>
+    <pubDate>Tue, 16 May 2023 20:37:19 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-concurrent-programming-lock/</guid>
+    <description><![CDATA[按上锁方式划分 隐式锁：synchronized Java的关键字，是Java提供的同步机制 不需要显式的执行加锁和解锁过程 显式锁：JUC包中提供]]></description>
+</item>
+<item>
+    <title>Java并发编程——CAS</title>
+    <link>https://lovedison.cn/posts/java-concurrent-programming-cas/</link>
+    <pubDate>Tue, 16 May 2023 19:19:14 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-concurrent-programming-cas/</guid>
+    <description><![CDATA[CAS是什么？ compare and swap 本质是一条CPU的原子指令，可以保证共享变量修改的原子性。 执行函数：CAS(V,E,N) 当且仅当内存地址V中的值等于 预期]]></description>
+</item>
+<item>
+    <title>UML类图</title>
+    <link>https://lovedison.cn/posts/uml-class-diagram/</link>
+    <pubDate>Mon, 15 May 2023 20:10:16 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/uml-class-diagram/</guid>
+    <description><![CDATA[定义 UML即统一建模语言（Unified Modeling Language） 这种统一建模语言是由图表组成的。 常用的有：序列图、类图、状态图、对象图、组件图和]]></description>
+</item>
+<item>
+    <title>使用PlantUML画图</title>
+    <link>https://lovedison.cn/posts/drawing-with-plantuml/</link>
+    <pubDate>Mon, 15 May 2023 19:51:28 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/drawing-with-plantuml/</guid>
+    <description><![CDATA[PlantUML是一个开源项目，支持快速绘制： 时序图、用例图、类图、对象图、活动图、组件图、部署图、状态图和定时图。 中文官网地址： https://plantuml.com/zh/ 如果想绘]]></description>
+</item>
+<item>
+    <title>Java并发编程基础</title>
+    <link>https://lovedison.cn/posts/java-multithreading/</link>
+    <pubDate>Sat, 13 May 2023 09:54:18 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-multithreading/</guid>
+    <description><![CDATA[1 多线程相关概念 1.1 线程和进程 1.1.1 什么是线程？什么是进程？ 进程：是指内存中运行的一个应用程序，每个进程都有自己独立的内存空间；进程也是程序的一次]]></description>
+</item>
+</channel>
 </rss>

@@ -1,65 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Categories on LoveDison&#39;s Blog</title>
-    <link>https://lovedison.cn/categories/</link>
-    <description>Recent content in Categories on LoveDison&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sun, 24 Nov 2024 22:42:54 +0800</lastBuildDate><atom:link href="https://lovedison.cn/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>mood</title>
-      <link>https://lovedison.cn/categories/mood/</link>
-      <pubDate>Sun, 24 Nov 2024 22:42:54 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/categories/mood/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>jdk21</title>
-      <link>https://lovedison.cn/categories/jdk21/</link>
-      <pubDate>Wed, 20 Nov 2024 12:34:41 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/categories/jdk21/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>java</title>
-      <link>https://lovedison.cn/categories/java/</link>
-      <pubDate>Tue, 16 May 2023 20:37:19 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/categories/java/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tools</title>
-      <link>https://lovedison.cn/categories/tools/</link>
-      <pubDate>Mon, 15 May 2023 19:51:28 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/categories/tools/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>mysql</title>
-      <link>https://lovedison.cn/categories/mysql/</link>
-      <pubDate>Sat, 25 Mar 2023 19:20:28 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/categories/mysql/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>linux</title>
-      <link>https://lovedison.cn/categories/linux/</link>
-      <pubDate>Wed, 25 May 2022 14:20:54 +0800</pubDate>
-      
-      <guid>https://lovedison.cn/categories/linux/</guid>
-      <description></description>
-    </item>
-    
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - Category - Dison的博客</title>
+        <link>https://lovedison.cn/categories/</link>
+        <description>Categories - Category - Dison的博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 27 Nov 2024 10:02:34 &#43;0800</lastBuildDate><atom:link href="https://lovedison.cn/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>tools</title>
+    <link>https://lovedison.cn/categories/tools/</link>
+    <pubDate>Wed, 27 Nov 2024 10:02:34 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/categories/tools/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>moods</title>
+    <link>https://lovedison.cn/categories/moods/</link>
+    <pubDate>Sun, 24 Nov 2024 22:42:54 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/categories/moods/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>java</title>
+    <link>https://lovedison.cn/categories/java/</link>
+    <pubDate>Tue, 16 May 2023 20:37:19 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/categories/java/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>books</title>
+    <link>https://lovedison.cn/categories/books/</link>
+    <pubDate>Sun, 23 Apr 2023 15:25:04 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/categories/books/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>mysql</title>
+    <link>https://lovedison.cn/categories/mysql/</link>
+    <pubDate>Sat, 25 Mar 2023 19:20:28 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/categories/mysql/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>linux</title>
+    <link>https://lovedison.cn/categories/linux/</link>
+    <pubDate>Wed, 25 May 2022 14:20:54 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/categories/linux/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
 </rss>

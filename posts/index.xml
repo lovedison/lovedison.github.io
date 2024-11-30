@@ -3,7 +3,15 @@
         <title>All Posts - Dison的博客</title>
         <link>https://lovedison.cn/posts/</link>
         <description>All Posts | Dison的博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 30 Nov 2024 19:44:39 &#43;0800</lastBuildDate><atom:link href="https://lovedison.cn/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 30 Nov 2024 21:52:16 &#43;0800</lastBuildDate><atom:link href="https://lovedison.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>打算抽时间好好读读资治通鉴</title>
+    <link>https://lovedison.cn/posts/2024-11-30%E6%89%93%E7%AE%97%E6%8A%BD%E6%97%B6%E9%97%B4%E5%A5%BD%E5%A5%BD%E8%AF%BB%E8%AF%BB%E8%B5%84%E6%B2%BB%E9%80%9A%E9%89%B4/</link>
+    <pubDate>Sat, 30 Nov 2024 21:52:16 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/2024-11-30%E6%89%93%E7%AE%97%E6%8A%BD%E6%97%B6%E9%97%B4%E5%A5%BD%E5%A5%BD%E8%AF%BB%E8%AF%BB%E8%B5%84%E6%B2%BB%E9%80%9A%E9%89%B4/</guid>
+    <description><![CDATA[记录一下自己的想法。这里的重点并不是“打算”，希望这不是自欺欺人。 冯唐在抖音宣称，“如果只读一本书，我就选《资治通鉴》。” 也找到了 YouTube 链接： 冯]]></description>
+</item>
+<item>
     <title>使用简单的逻辑方法进行独立思考</title>
     <link>https://lovedison.cn/posts/2024-11-30%E4%BD%BF%E7%94%A8%E7%AE%80%E5%8D%95%E7%9A%84%E9%80%BB%E8%BE%91%E6%96%B9%E6%B3%95%E8%BF%9B%E8%A1%8C%E7%8B%AC%E7%AB%8B%E6%80%9D%E8%80%83/</link>
     <pubDate>Sat, 30 Nov 2024 19:44:39 &#43;0800</pubDate>
@@ -14,7 +22,7 @@
 <item>
     <title>语迟</title>
     <link>https://lovedison.cn/posts/slow-in-speech/</link>
-    <pubDate>Sat, 30 Nov 2024 14:49:40 &#43;0800</pubDate>
+    <pubDate>Fri, 29 Nov 2024 14:49:40 &#43;0800</pubDate>
     <author>Dison</author>
     <guid>https://lovedison.cn/posts/slow-in-speech/</guid>
     <description><![CDATA[曾国藩说：“事缓则圆，人缓则安，语迟则贵。” 当我快速描述一件事情，表达一个看法，我会出现很多口头禅，这真的有点糟糕。已经有两个人点到这一点了]]></description>
@@ -74,14 +82,6 @@
     <author>Dison</author>
     <guid>https://lovedison.cn/posts/java-concurrent-programming-cas/</guid>
     <description><![CDATA[CAS是什么？ compare and swap 本质是一条CPU的原子指令，可以保证共享变量修改的原子性。 执行函数：CAS(V,E,N) 当且仅当内存地址V中的值等于 预期]]></description>
-</item>
-<item>
-    <title>UML类图</title>
-    <link>https://lovedison.cn/posts/uml-class-diagram/</link>
-    <pubDate>Mon, 15 May 2023 20:10:16 &#43;0800</pubDate>
-    <author>Dison</author>
-    <guid>https://lovedison.cn/posts/uml-class-diagram/</guid>
-    <description><![CDATA[定义 UML即统一建模语言（Unified Modeling Language） 这种统一建模语言是由图表组成的。 常用的有：序列图、类图、状态图、对象图、组件图和]]></description>
 </item>
 </channel>
 </rss>

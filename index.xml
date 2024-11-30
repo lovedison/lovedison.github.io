@@ -6,6 +6,14 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language>
             <atom:link href="https://lovedison.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>无题</title>
+    <link>https://lovedison.cn/posts/2024-11-30%E6%97%A0%E9%A2%98/</link>
+    <pubDate>Sat, 30 Nov 2024 14:49:40 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/2024-11-30%E6%97%A0%E9%A2%98/</guid>
+    <description><![CDATA[被爱是奢侈的幸福]]></description>
+</item>
+<item>
     <title>将Hugo博客主题修改为LoveIt</title>
     <link>https://lovedison.cn/posts/2024-11-27%E5%B0%86hugo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E4%B8%BAloveit/</link>
     <pubDate>Wed, 27 Nov 2024 10:02:34 &#43;0800</pubDate>
@@ -76,14 +84,6 @@
     <author>Dison</author>
     <guid>https://lovedison.cn/posts/drawing-with-plantuml/</guid>
     <description><![CDATA[PlantUML是一个开源项目，支持快速绘制： 时序图、用例图、类图、对象图、活动图、组件图、部署图、状态图和定时图。 中文官网地址： https://plantuml.com/zh/ 如果想绘]]></description>
-</item>
-<item>
-    <title>Java并发编程基础</title>
-    <link>https://lovedison.cn/posts/java-multithreading/</link>
-    <pubDate>Sat, 13 May 2023 09:54:18 &#43;0800</pubDate>
-    <author>Dison</author>
-    <guid>https://lovedison.cn/posts/java-multithreading/</guid>
-    <description><![CDATA[1 多线程相关概念 1.1 线程和进程 1.1.1 什么是线程？什么是进程？ 进程：是指内存中运行的一个应用程序，每个进程都有自己独立的内存空间；进程也是程序的一次]]></description>
 </item>
 </channel>
 </rss>

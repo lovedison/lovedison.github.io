@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Java并发编程基础 - Dison的博客</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Java并发编程基础" />
+<meta property="og:description" content="1 多线程相关概念 1.1 线程和进程 1.1.1 什么是线程？什么是进程？ 进程：是指内存中运行的一个应用程序，每个进程都有自己独立的内存空间；进程也是程序的一次" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lovedison.cn/posts/java-multithreading/" /><meta property="og:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-13T09:54:18+08:00" />
+<meta property="article:modified_time" content="2023-05-13T09:54:18+08:00" /><meta property="og:site_name" content="Dison的博客" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/>
+
+<meta name="twitter:title" content="Java并发编程基础"/>
+<meta name="twitter:description" content="1 多线程相关概念 1.1 线程和进程 1.1.1 什么是线程？什么是进程？ 进程：是指内存中运行的一个应用程序，每个进程都有自己独立的内存空间；进程也是程序的一次"/>
+<meta name="application-name" content="Dison&#39;s Blog&#39;">
+<meta name="apple-mobile-web-app-title" content="Dison&#39;s Blog&#39;"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://lovedison.cn/posts/java-multithreading/" /><link rel="prev" href="https://lovedison.cn/posts/cognitive-awakening/" /><link rel="next" href="https://lovedison.cn/posts/drawing-with-plantuml/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Java并发编程基础",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/lovedison.cn\/posts\/java-multithreading\/"
+        },"genre": "posts","keywords": "java","wordcount":  5469 ,
+        "url": "https:\/\/lovedison.cn\/posts\/java-multithreading\/","datePublished": "2023-05-13T09:54:18+08:00","dateModified": "2023-05-13T09:54:18+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Dison"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dison的博客"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about-me/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dison的博客"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about-me/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java并发编程基础</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://lovedison.cn" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Dison</a></span>&nbsp;<span class="post-category">included in <a href="/categories/java/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>java</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-13">2023-05-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5469 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#11-线程和进程">1.1 线程和进程</a>
+      <ul>
+        <li><a href="#111-什么是线程什么是进程">1.1.1 什么是线程？什么是进程？</a></li>
+        <li><a href="#112-进程与线程的区别">1.1.2 进程与线程的区别？</a></li>
+        <li><a href="#113-什么是多线程">1.1.3 什么是多线程？</a></li>
+        <li><a href="#114-并发与并行的区别">1.1.4 并发与并行的区别？</a></li>
+        <li><a href="#115-什么是线程上下文切换">1.1.5 什么是线程上下文切换？</a></li>
+        <li><a href="#116-java线程的生命周期">1.1.6 java线程的生命周期？</a></li>
+      </ul>
+    </li>
+    <li><a href="#12创建线程在jvm中的实现原理">1.2创建线程在JVM中的实现原理</a></li>
+    <li><a href="#13线程安全问题">1.3线程安全问题</a>
+      <ul>
+        <li><a href="#131什么是线程安全">1.3.1什么是线程安全？</a></li>
+        <li><a href="#132线程同步">1.3.2线程同步</a></li>
+      </ul>
+    </li>
+    <li><a href="#14-多线程并发的三个特性">1.4 多线程并发的三个特性</a>
+      <ul>
+        <li><a href="#141-并发编程中哪三个重要特性">1.4.1 并发编程中哪三个重要特性</a></li>
+        <li><a href="#142-java内存模型">1.4.2 Java内存模型</a></li>
+        <li><a href="#143-happens-before规则">1.4.3 happens-before规则</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#21-synchronized解决内存可见性的原理">2.1 synchronized解决内存可见性的原理</a></li>
+    <li><a href="#22-同步原理">2.2 同步原理</a></li>
+    <li><a href="#23-monitor管程">2.3 Monitor(管程)</a></li>
+    <li><a href="#24-锁优化">2.4 锁优化</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#31-volatile实现内存可见性的过程">3.1 volatile实现内存可见性的过程</a></li>
+    <li><a href="#32-volatile实现原理">3.2 volatile实现原理</a></li>
+    <li><a href="#33-volatile缺陷">3.3 volatile缺陷</a></li>
+    <li><a href="#34-volatile使用场景">3.4 volatile使用场景</a></li>
+    <li><a href="#35-synchronized和volatile比较">3.5 synchronized和volatile比较</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="1-多线程相关概念">1 多线程相关概念</h1>
+<h2 id="11-线程和进程">1.1 线程和进程</h2>
+<h3 id="111-什么是线程什么是进程">1.1.1 什么是线程？什么是进程？</h3>
+<ul>
+<li>
+<p><strong>进程</strong>：是指内存中运行的一个应用程序，每个进程都有自己独立的内存空间；进程也是程序的一次执行过程，是系统运行程序的基本单位;
+系统运行一个程序即是一个进程从创建、运行到消亡的过程。</p>
+</li>
+<li>
+<p><strong>线程</strong>：是<strong>进程中的一个执行单元</strong>，负责当前进程中任务的执行。一个进程在其执行过程中，会产生很多个线程。</p>
+</li>
+<li>
+<p>从操作系统角度来看，</p>
+<ul>
+<li>从用户态来看，创建进程其实就是启动一个项目。但是这个项目需要人去执行。有多个人并行执行不同的部分，这就叫<code>多线程</code>
+（Multithreading）。如果只有一个人，那它就是这个项目的主线程。</li>
+<li>但是从内核态来看，无论是进程，还是线程，我们都可以统称为任务（Task），都使用相同的数据结构<code>task_struct</code>
+，平放在同一个链表中。该数据结构中包含 pid, tgid 两个字段，通过对比 pid 和 tgid 可判断是进程还是线程。</li>
+</ul>
+</li>
+</ul>
+<h3 id="112-进程与线程的区别">1.1.2 进程与线程的区别？</h3>
+<ul>
+<li>进程：有独立<strong>内存空间</strong>，每个进程中的数据空间都是独立的。</li>
+<li>线程：多线程之间<strong>堆空间</strong>与<strong>方法区</strong>是共享的，但每个线程的<strong>栈空间</strong>、<strong>程序计数器</strong>是独立的，线程消耗的资源比进程小的多。</li>
+</ul>
+<h3 id="113-什么是多线程">1.1.3 什么是多线程？</h3>
+<ul>
+<li>多线程（multithreading）是指从软件或者硬件上实现多个线程并发执行的技术。</li>
+</ul>
+<h3 id="114-并发与并行的区别">1.1.4 并发与并行的区别？</h3>
+<ul>
+<li><strong>并发（Concurrent）</strong>：同一时间段，多个任务都在执行 ，单位时间内不⼀定同时执行</li>
+<li><strong>并行（Parallel）</strong>：单位时间内，多个任务同时执行，单位时间内一定是同时执行
+<ul>
+<li>并发是一种能力，并行是一种手段</li>
+</ul>
+</li>
+</ul>
+<h3 id="115-什么是线程上下文切换">1.1.5 什么是线程上下文切换？</h3>
+<ul>
+<li>
+<p>一个CPU内核，同一时刻只能被一个线程使用。为了提升CPU利用率，CPU采用了<strong>时间片算法</strong>将CPU时</p>
+<p>间片轮流分配给多个线程，每个线程分配了一个时间片（几十毫秒/线程），线程在时间片内，使用CPU</p>
+<p>执行任务。当时间片用完后，线程会被挂起，然后把 CPU 让给其它线程。</p>
+<ul>
+<li>CPU切换前会把当前任务状态保存下来，用于下次切换回任务时再次加载。</li>
+<li><strong>任务状态的保存及再加载的过程就叫做上下文切换。</strong>
+<ul>
+<li><strong>保存在哪里</strong>？程序计数器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>过多的线程并行执行会导致CPU资源的争抢，产生频繁的上下文切换，常常表现为高并发执行时，RT延长。</p>
+</li>
+</ul>
+<h3 id="116-java线程的生命周期">1.1.6 java线程的生命周期？</h3>
+<ul>
+<li>查看Thread源码，能够看到java的线程有六种状态：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">enum</span> <span class="n">State</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NEW</span><span class="o">,</span> <span class="c1">//创建但并未启动
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">RUNNABLE</span><span class="o">,</span> <span class="c1">//线程在Java虚拟机中处于可以运行的状态，是否正在执行取决于操作系统处理器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">BLOCKED</span><span class="o">,</span> <span class="c1">//试图获取到锁但没有得到后处于这个状态
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">WAITING</span><span class="o">,</span> <span class="c1">//无法自动唤醒，必须等待另一个线程调用notify或者notifyAll
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">TIMED_WAITING</span><span class="o">,</span> <span class="c1">//这一状态将一直保持到超时期满或者接收到唤醒通知
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">TERMINATED</span><span class="o">;</span> <span class="c1">//被终止。因为run方法正常退出而死亡，或者因为没有捕获的异常终止了run方法而死亡
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span></code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="..%2F..%2Fpost%2Fjava-multithreading01.png"
+        data-srcset="..%2F..%2Fpost%2Fjava-multithreading01.png, ..%2F..%2Fpost%2Fjava-multithreading01.png 1.5x, ..%2F..%2Fpost%2Fjava-multithreading01.png 2x"
+        data-sizes="auto"
+        alt="..%2F..%2Fpost%2Fjava-multithreading01.png"
+        title="java-multithreading01.png" /></p>
+<ul>
+<li>
+<p>Java线程常用方法：</p>
+<ul>
+<li>线程让步：yield()</li>
+<li>让线程休眠的方法：sleep()</li>
+<li>等待线程执行终止的方法： join()</li>
+<li>线程中断interrupt()</li>
+<li>等待与通知系列函数wait()、notify()、notifyAll()</li>
+</ul>
+</li>
+<li>
+<p><strong>wait</strong>()与<strong>sleep</strong>()区别</p>
+<ul>
+<li>主要区别：<strong>sleep</strong>()方法没有释放锁，而<strong>wait</strong>()方法释放了锁</li>
+<li>两者都可以暂停线程的执行</li>
+<li>wait()通常用于线程间的交互/通信，sleep()通常用于暂停线程执行</li>
+<li>wait()方法被调用后，线程不会自动苏醒，需要别的线程调用同一个对象的notify或notifyAll。</li>
+<li>sleep()方法执行完成后，线程会自动苏醒。或者可以使用wait(long)超时后，线程也会自动苏醒</li>
+</ul>
+</li>
+</ul>
+<h2 id="12创建线程在jvm中的实现原理">1.2创建线程在JVM中的实现原理</h2>
+<ol>
+<li>线程类被JVM加载时，完成线程所有native方法和C++中的对应方法绑定。</li>
+<li><strong>Java线程调用start方法</strong>：start方法==&gt;native state0方法==&gt;JVM_StartThread==&gt;创建JavaThread::JavaThread线程</li>
+<li><strong>创建OS线程，并指定OS线程的运行入口</strong>：创建JavaThread::JavaThread线程==&gt;创建OS线程os::create_thread==&gt;
+指定OS线程执行入口Java线程的run方法</li>
+<li><strong>启动OS线程</strong>：运行时会调用Java线程的run方法，至此实现了Java线程的运行。</li>
+<li>创建线程的时候使用的是互斥锁MutexLocker操作系统（互斥量），所以说创建线程是一个性能很差的操作！</li>
+</ol>
+<h2 id="13线程安全问题">1.3线程安全问题</h2>
+<h3 id="131什么是线程安全">1.3.1什么是线程安全？</h3>
+<ul>
+<li>
+<p>如果有多个线程在同时执行，而多个线程可能会同时运行一行代码。如果程序每次运行结果和单线程运行的结果一样，且其他的变量的值也和预期一样，就是线程安全的，反之则是线程不安全的。</p>
+</li>
+<li>
+<p>线程安全问题都是由全局变量及静态变量【共享】引起的。</p>
+<ul>
+<li>如果每个线程中对全局变量、静态变量只有读操作，而无写操作，那么这个全局变量是线程安全的；</li>
+<li>如果有多个线程同时执行写操作，一般都需要考虑线程同步，否则的话就可能影响线程安全问题。</li>
+</ul>
+</li>
+<li>
+<p>如何解决线程安全问题？</p>
+<ol>
+<li>线程同步</li>
+<li>volatile</li>
+<li>JUC
+<ul>
+<li>原子类（CAS）</li>
+<li>锁（AQS）</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="132线程同步">1.3.2线程同步</h3>
+<p><strong>同步代码块</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">synchronized</span><span class="o">(</span><span class="err">同步锁</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//需要同步操作的代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="o">}</span>
+</span></span></code></pre></div><h4 id="同步方法"><strong>同步方法</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//同步方法 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//可能会产生线程安全问题的代码 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="o">}</span>
+</span></span></code></pre></div><h4 id="lock锁">Lock锁</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Lock</span> <span class="n">lock</span><span class="o">=</span><span class="k">new</span> <span class="n">ReentrantLock</span><span class="o">();</span><span class="c1">//可重入锁 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//需要同步操作的代码 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+</span></span></code></pre></div><h2 id="14-多线程并发的三个特性">1.4 多线程并发的三个特性</h2>
+<h3 id="141-并发编程中哪三个重要特性">1.4.1 并发编程中哪三个重要特性</h3>
+<ul>
+<li>
+<p><strong>原子性</strong>：即一个操作或多个操作，要么全部执行，要么就都不执。</p>
+</li>
+<li>
+<p><strong>有序性</strong>：程序代码按照先后顺序执行</p>
+<ul>
+<li>为什么会出现无序问题呢？因为<strong>指令重排</strong>
+<ul>
+<li>指令重排是编译器和处理器为了提高程序运行效率，会对输入代码进行优化的一种手段。它不保证程序中，各个语句执行先后顺序的一致。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>可见性</strong>：当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值</p>
+<ul>
+<li>为什么出现不可见性问题呢？可以说是因为Java内存模型【JMM】</li>
+</ul>
+</li>
+</ul>
+<h3 id="142-java内存模型">1.4.2 Java内存模型</h3>
+<ul>
+<li>
+<p>诞生背景是因为<strong>CPU的缓存一致性</strong>、<strong>指令重排优化</strong>。</p>
+<ul>
+<li>Java为了保证并发编程中可以满足原子性、可见性及有序性，诞生出了一个重要的概念，那就是<strong>内存模型</strong>，
+<strong>内存模型定义了共享内存系统中多线程程序读写操作行为的规范</strong>。通过这些规则来规范对内存的读写操作，从而保证指令执行的正确性，它解决了
+CPU 多级缓存、处理器优化、指令重排等导致的内存访问问题。</li>
+</ul>
+</li>
+<li>
+<p>内存模型如何解决并发问题？</p>
+<ul>
+<li><strong>1.限制处理器优化</strong>、<strong>2.使用内存屏障</strong></li>
+</ul>
+</li>
+<li>
+<p>JMM中定义一个共享变量何时写入，何时对另一个线程可见</p>
+<ul>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="..%2F..%2Fpost%2Fjava-multithreading02.png"
+        data-srcset="..%2F..%2Fpost%2Fjava-multithreading02.png, ..%2F..%2Fpost%2Fjava-multithreading02.png 1.5x, ..%2F..%2Fpost%2Fjava-multithreading02.png 2x"
+        data-sizes="auto"
+        alt="..%2F..%2Fpost%2Fjava-multithreading02.png"
+        title="java-multithreading02.png" /></li>
+<li>Java中关键字Synchronized、Volatile</li>
+</ul>
+</li>
+<li>
+<p>JMM线程操作内存的基本规则</p>
+<ul>
+<li>线程与主内存：线程对共享变量的所有操作都必须在自己的本地内存中进行，不能直接从主内存中读写</li>
+<li>线程间本地内存：不同线程之间无法直接访问其他线程本地内存中的变量，线程间变量值的传递需要经过主内存</li>
+</ul>
+</li>
+</ul>
+<h3 id="143-happens-before规则">1.4.3 happens-before规则</h3>
+<ul>
+<li>在JMM中，使用happens-before规则来约束编译器的优化行为，允许编译期优化，但需要遵守一定的Happens-Before规则。
+<strong>如果一个操作执行的结果需要对另一个操作可见</strong>，那么这两个操作之间必须要存在happens-before的关系。
+<ul>
+<li>需关注的<strong>happens-before</strong>规则：
+<ul>
+<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
+<li>锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
+<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
+<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="2-synchronized">2 synchronized</h1>
+<ul>
+<li>synchronized可以保证并发程序的原子性，可见性，有序性。</li>
+<li>synchronized可以修饰方法和代码块。
+<ul>
+<li>方法：可修饰静态方法和非静态方法</li>
+<li>代码块：同步代码块的锁对象可以为当前实例对象、字节码对象（class）、其他实例对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="21-synchronized解决内存可见性的原理">2.1 synchronized解决内存可见性的原理</h2>
+<ul>
+<li>线程解锁前：必须把自己本地内存中共享变量的最新值刷新到主内存中</li>
+<li>线程加锁时：将清空本地内存中共享变量的值，从而使用共享变量时需要从主内存中重新读取最新的值</li>
+</ul>
+<h2 id="22-同步原理">2.2 同步原理</h2>
+<ul>
+<li>同步操作主要是monitorenter和monitorexit两个指令实现，背后原理是Monitor（管程）</li>
+<li>同步代码块
+<ul>
+<li>对应的<strong>monitorenter</strong>和<strong>monitorexit</strong>指令分别对应synchronized同步块的进入和退出</li>
+<li>为什么会多一个monitorexit?
+<ul>
+<li>因为编译器会为同步块添加一个隐式的try-finally，在finally中会调用monitorexit命令释放锁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>同步方法
+<ul>
+<li>JVM进行方法调用时，发现调用的方法被ACC_SYNCHRONIZED修饰，则会先尝试获得锁，方法调用结束了释放锁。</li>
+<li>底层依然是monitorenter和monitorexit指令</li>
+</ul>
+</li>
+</ul>
+<h2 id="23-monitor管程">2.3 Monitor(管程)</h2>
+<ul>
+<li>管程(Monitor)：是管理共享变量及对共享变量操作的过程，<strong>将共享变量和对共享变量的操作统一封装起来</strong>，让这个过程可以并发执行。</li>
+<li>为什么所有对象都可以作为锁？
+<ul>
+<li>因为每个对象都都有一个Monitor对象与之关联。然后线程对monitor执 行lock和unlock操作，相当于对对象执行上锁和解锁操作。</li>
+</ul>
+</li>
+<li>Java并没有把lock和unlock操作直接开放给用户使用，但是却提供了两个指令来隐式地使用这两个操作：moniterenter和moniterexit。moniterenter
+对应lock操作，moniterexit对应unlock操作， 通过这两个指令锁定和解锁 monitor 对象来实现同步。</li>
+<li>当一个monitor对象被线程持有后，它将处于锁定状态。对于一个 monitor 而言，同时只能有一个线程能锁定monitor，其它线程试图获得已被锁定的
+monitor时，都将被阻塞。当monitor被释放后，阻塞中的线程会尝试获得该 monitor锁。一个线程可以对一个 monitor 反复执行 lock
+操作，对应的释放锁时，需要执行相同次数的 unlock 操作。</li>
+</ul>
+<h2 id="24-锁优化">2.4 锁优化</h2>
+<ul>
+<li>什么是锁优化？
+<ul>
+<li>同步锁一共有四个状态：无锁，偏向锁，轻量级锁，重量级锁，JVM会视情况来逐渐升级锁，而不是上来就加重量级锁</li>
+</ul>
+</li>
+<li>偏向锁
+<ul>
+<li><strong>只有一个线程访问锁资源</strong>（无竞争）的话，偏向锁就会把整个同步措施都消除。</li>
+</ul>
+</li>
+<li>轻量级锁
+<ul>
+<li><strong>只有两个线程交替运行时</strong>，如果线程竞争锁失败了，先不立即挂起，而是让它飞一会儿（自旋），在等待过程中，可能锁就被释放了，这时线程重新尝试获取锁。</li>
+</ul>
+</li>
+<li>同步锁锁定的资源是对象，存储在对象头中。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>偏向锁标记</strong></th>
+<th style="text-align:center"><strong>锁状态标识</strong></th>
+<th style="text-align:center"><strong>锁状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">01</td>
+<td style="text-align:center">无锁</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">01</td>
+<td style="text-align:center">偏向锁</td>
+</tr>
+<tr>
+<td style="text-align:center">无</td>
+<td style="text-align:center">00</td>
+<td style="text-align:center">轻量锁</td>
+</tr>
+<tr>
+<td style="text-align:center">无</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">重量锁</td>
+</tr>
+<tr>
+<td style="text-align:center">无</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">GC标记</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>锁升级
+<ul>
+<li>锁可以升级但不能降级</li>
+<li><strong>偏向锁</strong>：是指当一段同步代码一直被同一个线程所访问时，即<strong>不存在多个线程的竞争</strong>
+时，那么该线程在后续访问时便会自动获得锁，从而降低获取锁带来的消耗，即提高性能。</li>
+<li><strong>轻量级锁</strong>：（自旋锁）是指<strong>当锁是偏向锁的时候，却被另外的线程所访问</strong>
+，此时偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，线程同样不会阻塞。长时间的自旋操作是非常消耗资源的，
+一个线程持有锁，其他线程就只能在原地空耗CPU，执行不了任何有效的任务，这种现象叫做忙等（busy-waiting）</li>
+<li><strong>重量级锁</strong>：此忙等是有限度的。如果锁竞争情况严重，某个达到最大自旋次数的线程，会将轻量级锁升级为重量级锁。当后续线程尝试获取锁时，发现被占用的锁是重量级锁，则直接将自己挂起
+（而不是忙等），等待将来被唤醒。有个计数器记录自旋次数，默认允许循环10次，可以通过虚拟机参数更改</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="3-volatile">3 volatile</h1>
+<ul>
+<li>volatile可以保证多线程场景下共享变量的可见性、有序性。
+<ul>
+<li>可见性：保证对此共享变量的修改，所有线程的可见性</li>
+<li>有序性：禁止指令重排序的优化，遵循JMM的happens-before规则</li>
+</ul>
+</li>
+</ul>
+<h2 id="31-volatile实现内存可见性的过程">3.1 volatile实现内存可见性的过程</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 添加volatile关键词 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">flag</span><span class="o">=</span><span class="kc">true</span><span class="o">;</span>
+</span></span></code></pre></div><ul>
+<li>线程写volatile变量的过程：
+<ol>
+<li>改变线程本地内存中volatile变量副本的值；</li>
+<li>将改变后的副本的值从本地内存刷新到主内存</li>
+</ol>
+</li>
+<li>线程读volatile变量的过程：
+<ol>
+<li>从主内存中读取volatile变量的最新值到线程的本地内存中</li>
+<li>从本地内存中读取volatile变量的副本</li>
+</ol>
+</li>
+</ul>
+<h2 id="32-volatile实现原理">3.2 volatile实现原理</h2>
+<ul>
+<li><strong>内存屏障</strong>（Memory Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。
+<ul>
+<li>Java编译器会根据内存屏障的规则<strong>禁止重排序</strong>。</li>
+<li>写操作时，通过在写操作指令<strong>后</strong>加入一条store屏障指令，让本地内存中变量的值能够刷新到主内存中</li>
+<li>读操作时，通过在读操作<strong>前</strong>加入一条load屏障指令，及时读取到变量在主内存的值</li>
+</ul>
+</li>
+</ul>
+<h2 id="33-volatile缺陷">3.3 volatile缺陷</h2>
+<ul>
+<li>
+<p>原子性问题</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">static</span> <span class="kd">class</span> <span class="nc">VolatileDemo</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">volatile</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">addCount</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addCount</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span><span class="o">++;</span><span class="c1">//实际是三条汇编指令 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>解决方法</p>
+<ol>
+<li>使用synchronized
+<ul>
+<li><code>public synchronized void addCount()</code></li>
+</ul>
+</li>
+<li>使用ReentrantLock（可重入锁）
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="n">Lock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="o">();</span> 
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addCount</span><span class="o">()</span> <span class="o">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">count</span><span class="o">++;</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">}</span> 
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>使用AtomicInteger（原子操作）
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="n">AtomicInteger</span> <span class="n">count</span><span class="o">=</span><span class="k">new</span> <span class="n">AtomicInteger</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addCount</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span> <span class="mi">10000</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">count</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="34-volatile使用场景">3.4 volatile使用场景</h2>
+<ul>
+<li>变量真正独立于其他变量和自己以前的值，在单独使用的时适合用volatile
+<ul>
+<li>对变量的写入操作不依赖其当前值：例如++和&ndash;运算符的场景则不行</li>
+<li>该变量没有包含在具有其他变量的不变式中</li>
+</ul>
+</li>
+</ul>
+<h2 id="35-synchronized和volatile比较">3.5 synchronized和volatile比较</h2>
+<ul>
+<li>volatile不需要加锁，比synchronized更轻便，不会阻塞线程</li>
+<li>synchronized既能保证可见性，又能保证原子性，而volatile只能保证可见性，无法保证原子性</li>
+<li>与synchronized相比，volatile是一种非常简单的同步机制</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-13</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/java/">java</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/cognitive-awakening/" class="prev" rel="prev" title="《认知觉醒》"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>《认知觉醒》</a>
+            <a href="/posts/drawing-with-plantuml/" class="next" rel="next" title="使用PlantUML画图">使用PlantUML画图<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.112.0-DEV">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://lovedison.cn" target="_blank">Dison</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

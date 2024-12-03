@@ -1,0 +1,39 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>tools - Category - Dison的博客</title>
+        <link>https://lovedison.cn/categories/tools/</link>
+        <description>tools - Category - Dison的博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 27 Nov 2024 10:02:34 &#43;0800</lastBuildDate><atom:link href="https://lovedison.cn/categories/tools/" rel="self" type="application/rss+xml" /><item>
+    <title>将Hugo博客主题修改为LoveIt</title>
+    <link>https://lovedison.cn/posts/2024-11-27%E5%B0%86hugo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E4%B8%BAloveit/</link>
+    <pubDate>Wed, 27 Nov 2024 10:02:34 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/2024-11-27%E5%B0%86hugo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E4%B8%BAloveit/</guid>
+    <description><![CDATA[调研 首先，在调研了好几个blog tools之后，还是hugo作为静态博客，优势巨大。主题方面，mogege已经很久没人维护了。 Hugo 主题推荐 对比]]></description>
+</item>
+<item>
+    <title>使用PlantUML画图</title>
+    <link>https://lovedison.cn/posts/drawing-with-plantuml/</link>
+    <pubDate>Mon, 15 May 2023 19:51:28 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/drawing-with-plantuml/</guid>
+    <description><![CDATA[PlantUML是一个开源项目，支持快速绘制： 时序图、用例图、类图、对象图、活动图、组件图、部署图、状态图和定时图。 中文官网地址： https://plantuml.com/zh/ 如果想绘]]></description>
+</item>
+<item>
+    <title>Bilibili天涯明月刀自制曲谱</title>
+    <link>https://lovedison.cn/posts/bilibili-jiangnanqinshi-home/</link>
+    <pubDate>Sat, 25 Mar 2023 20:28:53 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/bilibili-jiangnanqinshi-home/</guid>
+    <description><![CDATA[B站UP主江南琴师：]]></description>
+</item>
+<item>
+    <title>使用hugo写博客</title>
+    <link>https://lovedison.cn/posts/write-blog-with-hugo/</link>
+    <pubDate>Sun, 18 Apr 2021 10:37:43 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/write-blog-with-hugo/</guid>
+    <description><![CDATA[本地运行hugo命令 hugo server 或者 hugo server -D 加上-D参数，可以显示草稿状态的文章。 本地浏览器访问 http://localhost:1313/ 即可看到博客。 写文章 通过下面命令新建文章，然后手动打]]></description>
+</item>
+</channel>
+</rss>

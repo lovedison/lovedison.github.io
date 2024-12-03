@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Java并发编程——CAS - Dison的博客</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Java并发编程——CAS" />
+<meta property="og:description" content="CAS是什么？ compare and swap 本质是一条CPU的原子指令，可以保证共享变量修改的原子性。 执行函数：CAS(V,E,N) 当且仅当内存地址V中的值等于 预期" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lovedison.cn/posts/java-concurrent-programming-cas/" /><meta property="og:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-16T19:19:14+08:00" />
+<meta property="article:modified_time" content="2023-05-16T19:19:14+08:00" /><meta property="og:site_name" content="Dison的博客" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/>
+
+<meta name="twitter:title" content="Java并发编程——CAS"/>
+<meta name="twitter:description" content="CAS是什么？ compare and swap 本质是一条CPU的原子指令，可以保证共享变量修改的原子性。 执行函数：CAS(V,E,N) 当且仅当内存地址V中的值等于 预期"/>
+<meta name="application-name" content="Dison&#39;s Blog&#39;">
+<meta name="apple-mobile-web-app-title" content="Dison&#39;s Blog&#39;"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://lovedison.cn/posts/java-concurrent-programming-cas/" /><link rel="prev" href="https://lovedison.cn/posts/uml-class-diagram/" /><link rel="next" href="https://lovedison.cn/posts/java-concurrent-programming-lock/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Java并发编程——CAS",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/lovedison.cn\/posts\/java-concurrent-programming-cas\/"
+        },"genre": "posts","keywords": "java","wordcount":  1136 ,
+        "url": "https:\/\/lovedison.cn\/posts\/java-concurrent-programming-cas\/","datePublished": "2023-05-16T19:19:14+08:00","dateModified": "2023-05-16T19:19:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Dison"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dison的博客"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about-me/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dison的博客"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about-me/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java并发编程——CAS</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://lovedison.cn" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Dison</a></span>&nbsp;<span class="post-category">included in <a href="/categories/java/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>java</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-16">2023-05-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1136 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#cas是什么">CAS是什么？</a></li>
+    <li><a href="#java中对cas的实现">Java中对CAS的实现</a></li>
+    <li><a href="#cas缺陷">CAS缺陷</a></li>
+    <li><a href="#原子变量类">原子变量类</a>
+      <ul>
+        <li><a href="#atomic常用类">Atomic常用类</a></li>
+        <li><a href="#atomicinteger主要api">AtomicInteger主要API</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="cas是什么">CAS是什么？</h2>
+<ul>
+<li><code>compare and swap</code></li>
+<li><strong>本质是一条CPU的原子指令，可以保证共享变量修改的原子性。</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">执行函数：CAS<span class="o">(</span>V,E,N<span class="o">)</span>
+</span></span></code></pre></div><ul>
+<li>当且仅当<strong>内存地址V</strong>中的值等于 <strong>预期值E</strong> 时，将内存V中的值改为N，否则会进行自旋操作（一般情况
+下），即不断的重试。</li>
+</ul>
+<h2 id="java中对cas的实现">Java中对CAS的实现</h2>
+<ul>
+<li>Java不能像C/C++那样直接操作内存区域，需要通过本地方法(native方法)来访问。JAVA中的CAS操作都
+是通过sun包下Unsafe类实（sun.misc.Unsafe），而Unsafe类中的方法都是native方法。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//offset：内存偏移量，offset 为o对象所属类中，某个属性在类中的内存地址偏移量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">final</span> <span class="kd">native</span> <span class="kt">boolean</span> <span class="nf">compareAndSwapInt</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">,</span><span class="kt">long</span> <span class="n">offset</span><span class="o">,</span><span class="kt">int</span> <span class="n">expected</span><span class="o">,</span><span class="kt">int</span> <span class="n">x</span><span class="o">);</span>
+</span></span></code></pre></div><ul>
+<li><code>compareAndSwapInt</code>在看openJDK8的源码中位置：
+<ul>
+<li><code>openjdk8/hotspot/src/share/vm/prims/unsafe.cpp</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="cas缺陷">CAS缺陷</h2>
+<ol>
+<li>自旋开销（循环时间太长）
+<ul>
+<li>原子类AtomicInteger#getAndIncrement()的方法</li>
+</ul>
+</li>
+<li>只能保证一个共享变量的原子操作</li>
+<li>ABA问题
+<ul>
+<li>如果一个值原来是A，变成了B，然后又变成了A，那么在CAS检查的时候会发现没有改变，但
+是实质上它已经发生了改变，这就是所谓的ABA问题</li>
+<li>解决方案：加版本号（类似于乐观锁）。即
+在每个变量绑定一个版本号，每次改变时加1，即A —&gt; B —&gt; A，变成1A —&gt; 2B —&gt; 3A。
+<ul>
+<li>例如为了消除原子类<code>AtomicInteger ar = new AtomicInteger(100);</code>的ABA问题，
+可以改用<code>AtomicStampedReference&lt;Integer&gt; asr = new AtomicStampedReference&lt;&gt;(100, 1);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="原子变量类">原子变量类</h2>
+<ul>
+<li><code>java.util.concurrent.atomic</code>包
+<ul>
+<li>用法简单、性能高效、线程安全地更新一个变量的方式</li>
+<li>可以解决volatile原子性操作变量的问题</li>
+<li>Atomic包里的类基本都是使用Unsafe实现的包装类</li>
+</ul>
+</li>
+</ul>
+<h3 id="atomic常用类">Atomic常用类</h3>
+<ul>
+<li>基本类型
+<ul>
+<li><code>AtomicInteger</code></li>
+<li>AtomicLong</li>
+<li>AtomicBoolean</li>
+</ul>
+</li>
+<li>引用类型
+<ul>
+<li>AtomicReference</li>
+<li><code>AtomicStampedReference</code></li>
+<li><code>AtomicMarkableReference</code></li>
+</ul>
+</li>
+<li>数组类型
+<ul>
+<li>AtomicIntegerArray</li>
+<li>AtomicLongArray</li>
+<li>AtomicReferenceArray</li>
+</ul>
+</li>
+<li>对象的属性修改类型
+<ul>
+<li>AtomicIntegerFieldUpdater</li>
+<li>AtomicLongFieldUpdater</li>
+<li>AtomicReferenceFieldUpdater</li>
+</ul>
+</li>
+</ul>
+<h3 id="atomicinteger主要api">AtomicInteger主要API</h3>
+<ul>
+<li>1
+<ul>
+<li>get()：获取当前值</li>
+<li>getAndAdd(int delta)：获取当前值，并加上预期的值</li>
+<li>getAndSet(int newValue)：获取当前值，并设置新值</li>
+<li><code>getAndIncrement()</code>：获取当前值，并自增</li>
+<li>getAndDecrement()：获取当前值，并自减</li>
+</ul>
+</li>
+<li>2
+<ul>
+<li>addAndGet(int delta)：加上预期的值，返回增加后的数据</li>
+<li><code>incrementAndGet()</code>：增加1，返回增加后的值</li>
+<li>decrementAndGet()：减少1，返回减少后的值</li>
+<li>lazySet(int newValue)：仅仅当get时才会set</li>
+</ul>
+</li>
+<li>3 <code>compareAndSet(int expect, int update)</code>：尝试新增后对比，若增加成功则返回true否则返回false</li>
+</ul>
+<h4 id="demo">demo</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">VolatileDemo</span> <span class="n">demo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VolatileDemo</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">demo</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;count = &#34;</span> <span class="o">+</span> <span class="n">demo</span><span class="o">.</span><span class="na">count</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">VolatileDemo</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="n">AtomicInteger</span> <span class="n">count</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicInteger</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">addCount</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addCount</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">count</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/java/">java</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/uml-class-diagram/" class="prev" rel="prev" title="UML类图"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>UML类图</a>
+            <a href="/posts/java-concurrent-programming-lock/" class="next" rel="next" title="Java并发编程——锁分类">Java并发编程——锁分类<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.112.0-DEV">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://lovedison.cn" target="_blank">Dison</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

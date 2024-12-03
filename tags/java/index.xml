@@ -1,0 +1,55 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>java - Tag - Dison的博客</title>
+        <link>https://lovedison.cn/tags/java/</link>
+        <description>java - Tag - Dison的博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 16 May 2023 20:37:19 &#43;0800</lastBuildDate><atom:link href="https://lovedison.cn/tags/java/" rel="self" type="application/rss+xml" /><item>
+    <title>Java并发编程——锁分类</title>
+    <link>https://lovedison.cn/posts/java-concurrent-programming-lock/</link>
+    <pubDate>Tue, 16 May 2023 20:37:19 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-concurrent-programming-lock/</guid>
+    <description><![CDATA[按上锁方式划分 隐式锁：synchronized Java的关键字，是Java提供的同步机制 不需要显式的执行加锁和解锁过程 显式锁：JUC包中提供]]></description>
+</item>
+<item>
+    <title>Java并发编程——CAS</title>
+    <link>https://lovedison.cn/posts/java-concurrent-programming-cas/</link>
+    <pubDate>Tue, 16 May 2023 19:19:14 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-concurrent-programming-cas/</guid>
+    <description><![CDATA[CAS是什么？ compare and swap 本质是一条CPU的原子指令，可以保证共享变量修改的原子性。 执行函数：CAS(V,E,N) 当且仅当内存地址V中的值等于 预期]]></description>
+</item>
+<item>
+    <title>UML类图</title>
+    <link>https://lovedison.cn/posts/uml-class-diagram/</link>
+    <pubDate>Mon, 15 May 2023 20:10:16 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/uml-class-diagram/</guid>
+    <description><![CDATA[定义 UML即统一建模语言（Unified Modeling Language） 这种统一建模语言是由图表组成的。 常用的有：序列图、类图、状态图、对象图、组件图和]]></description>
+</item>
+<item>
+    <title>Java并发编程基础</title>
+    <link>https://lovedison.cn/posts/java-multithreading/</link>
+    <pubDate>Sat, 13 May 2023 09:54:18 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-multithreading/</guid>
+    <description><![CDATA[1 多线程相关概念 1.1 线程和进程 1.1.1 什么是线程？什么是进程？ 进程：是指内存中运行的一个应用程序，每个进程都有自己独立的内存空间；进程也是程序的一次]]></description>
+</item>
+<item>
+    <title>Java自定义注解</title>
+    <link>https://lovedison.cn/posts/java-custom-annotation/</link>
+    <pubDate>Sun, 16 Apr 2023 18:36:09 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-custom-annotation/</guid>
+    <description><![CDATA[注解格式 //元注解 public @interface 注解名称 { 属性列表; } 注解本质上就是一个接口，该接口默认继承Annotation接口。任何注解默认继承Annotati]]></description>
+</item>
+<item>
+    <title>Java反射</title>
+    <link>https://lovedison.cn/posts/java-reflection/</link>
+    <pubDate>Sat, 15 Apr 2023 11:32:19 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/java-reflection/</guid>
+    <description><![CDATA[反射(Reflection) 允许运行中的Java 程序获取自身的信息，并且可以操作类或对象的内部属性。 反射的核心是 JVM 在运行时才动态加载类或调用]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Mysql锁分析 - Dison的博客</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Mysql锁分析" />
+<meta property="og:description" content="一般处理并发问题会设计两种锁， 共享锁(shared lock)，S锁，也叫读锁(read lock)。 排他锁(exclusive lock)，X锁" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lovedison.cn/posts/mysql-lock/" /><meta property="og:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-25T19:20:28+08:00" />
+<meta property="article:modified_time" content="2023-03-25T19:20:28+08:00" /><meta property="og:site_name" content="Dison的博客" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/>
+
+<meta name="twitter:title" content="Mysql锁分析"/>
+<meta name="twitter:description" content="一般处理并发问题会设计两种锁， 共享锁(shared lock)，S锁，也叫读锁(read lock)。 排他锁(exclusive lock)，X锁"/>
+<meta name="application-name" content="Dison&#39;s Blog&#39;">
+<meta name="apple-mobile-web-app-title" content="Dison&#39;s Blog&#39;"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://lovedison.cn/posts/mysql-lock/" /><link rel="prev" href="https://lovedison.cn/posts/linux-environment-variables/" /><link rel="next" href="https://lovedison.cn/posts/bilibili-jiangnanqinshi-home/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Mysql锁分析",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/lovedison.cn\/posts\/mysql-lock\/"
+        },"genre": "posts","keywords": "mysql","wordcount":  3051 ,
+        "url": "https:\/\/lovedison.cn\/posts\/mysql-lock\/","datePublished": "2023-03-25T19:20:28+08:00","dateModified": "2023-03-25T19:20:28+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Dison"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dison的博客"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about-me/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dison的博客"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about-me/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Mysql锁分析</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://lovedison.cn" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Dison</a></span>&nbsp;<span class="post-category">included in <a href="/categories/mysql/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>mysql</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-25">2023-03-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3051 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1--全局锁">1.  全局锁</a></li>
+    <li><a href="#2-表锁">2. 表锁</a>
+      <ul>
+        <li><a href="#mysql的表级锁有四种">MySQL的表级锁有四种</a></li>
+        <li><a href="#表锁常用命令">表锁常用命令</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-行锁">3. 行锁</a>
+      <ul>
+        <li></li>
+        <li><a href="#如何加行级锁"><strong>如何加行级锁？</strong></a></li>
+        <li><a href="#加锁规则"><strong>加锁规则</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#4--讨论一条sql执行时加了什么锁">4.  讨论一条sql执行时加了什么锁。</a>
+      <ul>
+        <li><a href="#分析">分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>一般处理并发问题会设计两种锁，</p>
+<ul>
+<li><strong>共享锁(shared lock)</strong>，S锁，也叫<strong>读锁(read lock)</strong>。</li>
+<li><strong>排他锁(exclusive lock)</strong>，X锁，也叫<strong>写锁(write lock)</strong>。
+Mysql同样如此。
+读锁互不阻塞（多个线程在同一时刻可以读取同一个资源，而不互相干扰）。而一个线程的写锁会会阻塞其他线程的写和读。</li>
+</ul>
+<h2 id="1--全局锁">1.  全局锁</h2>
+<p>全局锁是对整个数据库实例加锁，加锁后整个实例就处于只读状态。典型的使用场景是做全库的逻辑备份，对所有的表进行锁
+定，从而获取一致性视图，保证数据的完整性。
+加全局锁的命令为：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">flush</span><span class="w"> </span><span class="kp">tables</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="k">read</span><span class="w"> </span><span class="k">lock</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><p>释放全局锁的命令为：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">unlock</span><span class="w"> </span><span class="kp">tables</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><p>或者断开加锁session的连接，自动释放全局锁。
+对于InnoDB存储引擎，使用mysqldump备份时可以使用&ndash;single-transaction参数，利用mvcc提供一致性视图，而不使用全局锁，不会影响业务的正常运行。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="c1"># MyISAM 提交请求锁定所有数据库中的所有表，以保证数据的一致性，全局读锁【LBCC】 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">mysqldump</span><span class="w"> </span><span class="o">-</span><span class="n">uroot</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="n">localhost</span><span class="w"> </span><span class="o">--</span><span class="k">all</span><span class="o">-</span><span class="k">databases</span><span class="w"> </span><span class="o">--</span><span class="k">lock</span><span class="o">-</span><span class="k">all</span><span class="o">-</span><span class="kp">tables</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">db</span><span class="p">.</span><span class="k">sql</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1"># InnoDB 一致性视图【MVCC】 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">mysqldump</span><span class="w"> </span><span class="o">-</span><span class="n">uroot</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="n">localhost</span><span class="w"> </span><span class="o">--</span><span class="k">all</span><span class="o">-</span><span class="k">databases</span><span class="w"> </span><span class="o">--</span><span class="n">single</span><span class="o">-</span><span class="n">transaction</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">db</span><span class="p">.</span><span class="k">sql</span><span class="w">
+</span></span></span></code></pre></div><hr>
+<h2 id="2-表锁">2. 表锁</h2>
+<h3 id="mysql的表级锁有四种">MySQL的表级锁有四种</h3>
+<ul>
+<li>表读锁（Table Read Lock）</li>
+<li>表写锁（Table Write Lock）</li>
+<li>元数据锁（meta data lock，MDL)
+<ul>
+<li>不需要显式指定</li>
+<li>当对一个表做增删改查操作的时候，<strong>加 元数据 读锁</strong>；当要对表做结构变更操作的时候，<strong>加 元数据 写锁</strong>。</li>
+</ul>
+</li>
+<li>自增锁(AUTO-INC Locks)
+<ul>
+<li>涉及AUTO_INCREMENT列的事务性插入操作时产生</li>
+</ul>
+</li>
+</ul>
+<h3 id="表锁常用命令">表锁常用命令</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="c1"># 查看表锁定状态 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;table%&#39;</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">lock</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">read</span><span class="p">;</span><span class="w"> </span><span class="c1">#为表t加读锁 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">lock</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">write</span><span class="p">;</span><span class="w"> </span><span class="c1">#为表t加写锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">show</span><span class="w"> </span><span class="n">open</span><span class="w"> </span><span class="kp">tables</span><span class="p">;</span><span class="w"> </span><span class="c1">#查看表锁情况
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">unlock</span><span class="w"> </span><span class="kp">tables</span><span class="p">;</span><span class="w"> </span><span class="c1">#删除表锁
+</span></span></span></code></pre></div><ul>
+<li><strong>【读阻塞写】</strong>
+<ul>
+<li>添加读锁后，当前Session插入或更新<strong>锁定的表</strong>会提示错误，其他Session插入或更新锁定表<strong>会一直等待</strong></li>
+</ul>
+</li>
+<li><strong>【写阻塞读】</strong>
+<ul>
+<li>添加写锁后，当前session对锁定表的查询+更新+插入操作都可执行，其他session对锁定表的查询被阻塞，需要等待锁被释放</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-行锁">3. 行锁</h2>
+<p>MySQL的<strong>行级锁</strong>，是由<strong>存储引擎</strong>来实现的。<strong>InnoDB</strong>行锁是通过给索引上的<strong>索引项加锁来实现的</strong></p>
+<ul>
+<li>（这一点困扰了自己很长时间，一直以为是加在记录的那一行上）</li>
+</ul>
+<p>因此只有通过索引条件检索的数据，InnoDB使用行级锁，否则将使用表锁。</p>
+<p><strong>InnoDB的行级锁，按锁定范围划分：</strong></p>
+<h4 id="记录锁record-locks">记录锁（Record Locks）</h4>
+<ul>
+<li>锁定索引中一条记录。</li>
+<li>锁住的永远是索引，而非记录本身，即使该表上没有任何显示索引，那么innodb会在后台创建一个隐藏的聚簇索引索引，那么锁住的就是这个隐藏的聚簇索引索引。</li>
+</ul>
+<h4 id="间隙锁gap-locks">间隙锁（Gap Locks）</h4>
+<ul>
+<li>锁住一个索引区间**（开区间，不包括双端端点）**</li>
+<li><strong>间隙锁可用于防止幻读</strong>，保证<strong>索引间隙</strong>不会被插入数据。在可重复读（RR）这个隔离级别下生效。</li>
+</ul>
+<h4 id="临键锁next-key-locks">临键锁（Next-Key Locks）</h4>
+<ul>
+<li>相当于记录锁 + 间隙锁【<strong>左开右闭区间</strong>】</li>
+<li>默认情况下，innodb使用临键锁来锁定记录，但在不同的场景中会退化</li>
+<li>当查询的索引含有唯一属性的时候，临键锁会进行优化，将其降级为<strong>记录锁</strong>，即仅锁住索引本身，不是范围。</li>
+</ul>
+<h4 id="插入意向锁insert-intention-locks">插入意向锁(Insert Intention Locks)</h4>
+<ul>
+<li>在 <strong>INSERT 操作之前设置的</strong>一种特殊的<strong>间隙锁</strong>。</li>
+<li>插入意向锁不会阻止插入意向锁，但是插入意向锁会阻止其他<strong>间隙写锁（排他锁）</strong>、<strong>记录锁</strong>。</li>
+<li>举个栗子：有两个事务分别尝试插入值为 60 和 70 的记录，每个事务使用插入意向锁锁定 11 和 99之间的间隙，但是这两个事务不会相互阻塞，因为行是不冲突的！这就是插入意向锁。</li>
+<li>也就是说间隙锁锁住的范围太大，性能不好。而插入意向锁就是对间隙锁的优化。</li>
+</ul>
+<h4 id="意向锁intention-locks">意向锁（Intention Locks）</h4>
+<ul>
+<li>相当于存储引擎级别的表锁</li>
+<li><strong>意向锁和行锁可以共存</strong>，意向锁的主要作用是为了<strong>全表更新数据时的提升性能</strong>。否则在全表更新数据时，需要先检索该范是否某些记录上面有行锁。那么将是一件非常繁琐且耗时操作。</li>
+<li>说白了，只需要判断一次即可知道某表有没数据行被锁定，提升性能</li>
+</ul>
+<p><strong>InnoDB的行级锁，按功能划分：</strong></p>
+<ul>
+<li>读锁：阻止其他事务加写锁，但不阻止其他事务加读锁。</li>
+<li>写锁：阻止其他事务加读锁和写锁。</li>
+</ul>
+<h3 id="如何加行级锁"><strong>如何加行级锁？</strong></h3>
+<ul>
+<li>对于<strong>UPDATE*、*DELETE</strong>和<strong>INSERT</strong>语句，<strong>InnoDB</strong>会自动给涉及数据集加<strong>写锁</strong>；</li>
+<li>对于普通<strong>SELECT</strong>语句，<strong>InnoDB</strong>不会加任何锁</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="c1">#添加读锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t1_simple</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="k">lock</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">share</span><span class="w"> </span><span class="n">mode</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">#添加写锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t1_simple</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">update</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h3 id="加锁规则"><strong>加锁规则</strong></h3>
+<h4 id="主键索引">主键索引</h4>
+<ol>
+<li>等值条件，命中，加记录锁</li>
+<li>等值条件，未命中，加间隙锁</li>
+<li>范围条件，命中，包含where条件的临键区间，加临键锁</li>
+<li>范围条件，没有命中，加间隙锁</li>
+</ol>
+<h4 id="辅助索引">辅助索引</h4>
+<ol start="5">
+<li>等值条件，命中，命中记录的辅助索引项 + 主键索引项加记录锁，辅助索引项两侧加间隙锁</li>
+<li>等值条件，未命中，加间隙锁</li>
+<li>范围条件，命中，包含where条件的临键区间加临键锁。命中记录的id索引项加记录锁</li>
+<li>范围条件，没有命中，加间隙锁</li>
+</ol>
+<hr>
+<h2 id="4--讨论一条sql执行时加了什么锁">4.  讨论一条sql执行时加了什么锁。</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">delete</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1"># 假设数据表有两列，id和name
+</span></span></span></code></pre></div><ul>
+<li>首先再次明确一个概念，Mysql的行锁是加在索引上的。</li>
+<li>然后需要考虑一些前置条件
+<ol>
+<li>当前的数据库隔离级别</li>
+<li>id列是否是主键</li>
+<li>若不是主键，id列是否有索引</li>
+<li>如果id列有二级索引，是唯一索引吗</li>
+<li>当前是否存在id=10的数据</li>
+</ol>
+</li>
+</ul>
+<h3 id="分析">分析</h3>
+<h4 id="case-1--id为主键">case 1 : id为主键</h4>
+<ul>
+<li>只需要将主键上id = 10的记录加上写锁即可。</li>
+</ul>
+<h4 id="case-2id非主键但是一个unique的二级索引键值">case 2：id非主键，但是一个Unique的二级索引键值</h4>
+<ul>
+<li>假设name是主键</li>
+<li>首先在辅助索引中找到符合条件的记录（通过id查找name），加写锁</li>
+<li>然后拿着主键name去主键索引（聚簇索引）中找到记录，也加写锁</li>
+<li><strong>一共加锁2个</strong></li>
+</ul>
+<h4 id="case-3id有二级索引但是非唯一索引">case 3：id有二级索引，但是非唯一索引</h4>
+<h5 id="case3-1-隔离级别rc情况下">case3-1: 隔离级别RC情况下</h5>
+<ul>
+<li>由于id列非唯一，假设根据id能查到n条数据</li>
+<li>同case2，辅助索引和主键索引上符合条件的记录都加写锁</li>
+<li><strong>一共加锁2*n个</strong></li>
+</ul>
+<h5 id="case3-2-隔离级别rr情况下">case3-2: 隔离级别RR情况下</h5>
+<ul>
+<li><strong>RR隔离级别，不允许存在幻读</strong>
+<ul>
+<li>同一个事务，连续做两次当前读 (例如：select * from t1 where id = 10 for update;)，那么这两次当前读返回的是完全相同的记录 (记录数量一致，记录本身也一致)</li>
+<li>**如何保证两次当前读返回一致的记录？**那就需要在第一次当前读与第二次当前读之间，其他的事务不会插入新的满足条件的记录并提交。&ndash;&gt;间隙锁</li>
+</ul>
+</li>
+<li>首先，通过id索引定位到第一条满足查询条件的记录，加记录上的写锁，加GAP上的间隙锁，然后加主键聚簇索引上的记录<strong>写锁</strong>，然后返回；</li>
+<li>然后读取下一条，重复进行。直至进行到第一条不满足条件的记录[11,f]，此时，不需要加记录<strong>写锁</strong>，但是仍旧需要加间隙锁，最后返回结束。</li>
+<li>和RC隔离级别相比，增加了在辅助索引上的间隙锁，间隙锁的个数取决于数据位置。<strong>一共加锁2*n+x个</strong></li>
+</ul>
+<h4 id="case-4-id无索引">case 4: id无索引</h4>
+<h5 id="case4-1-隔离级别rc情况下">case4-1: 隔离级别RC情况下</h5>
+<ul>
+<li>由于id列上没有索引，因此只能走聚簇索引，进行全部扫描</li>
+<li>首先，聚簇索引上所有的记录，都被加上了写锁</li>
+<li>但是MySQL做了优化，对于不满足条件的记录，会在判断后放锁，<strong>最终持有的，是满足条件的记录上的锁，但是不满足条件的记录上的加锁/放锁动作不会省略。</strong></li>
+</ul>
+<h5 id="case4-2-隔离级别rr情况下">case4-2: 隔离级别RR情况下</h5>
+<ul>
+<li><strong>RR隔离级别，不允许存在幻读</strong></li>
+<li>首先，聚簇索引上的所有记录，都被加上了<strong>写锁</strong>。其次，聚簇索引每条记录间的间隙，也同时被加上了间隙锁。
+<ul>
+<li>假设表中有1千万数据，那么就是加1千万记录锁和1千万零1条间隙锁。</li>
+<li>在这种情况下，这个表上，除了不加锁的快照度，其他任何加锁的并发SQL，均不能执行，不能更新，不能删除，不能插入，全表被锁死。（很严重了！）</li>
+</ul>
+</li>
+<li>同RC一样，对于不满足条件的记录，会在判断后放锁，<strong>最终持有的，是满足条件的记录上的锁，但是不满足条件的记录上的加锁/放锁动作不会省略。</strong></li>
+</ul>
+<h4 id="case5-串行化serializable-隔离级别下">case5: 串行化Serializable 隔离级别下</h4>
+<ul>
+<li><strong>MVCC</strong>并发控制降级为<strong>LBCC</strong></li>
+<li>同case4-2</li>
+</ul>
+<hr>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mysql/">mysql</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/linux-environment-variables/" class="prev" rel="prev" title="Linux环境变量"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Linux环境变量</a>
+            <a href="/posts/bilibili-jiangnanqinshi-home/" class="next" rel="next" title="Bilibili天涯明月刀自制曲谱">Bilibili天涯明月刀自制曲谱<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.112.0-DEV">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://lovedison.cn" target="_blank">Dison</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

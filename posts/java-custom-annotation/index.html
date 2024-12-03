@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Java自定义注解 - Dison的博客</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Java自定义注解" />
+<meta property="og:description" content="注解格式 //元注解 public @interface 注解名称 { 属性列表; } 注解本质上就是一个接口，该接口默认继承Annotation接口。任何注解默认继承Annotati" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lovedison.cn/posts/java-custom-annotation/" /><meta property="og:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-16T18:36:09+08:00" />
+<meta property="article:modified_time" content="2023-04-16T18:36:09+08:00" /><meta property="og:site_name" content="Dison的博客" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/>
+
+<meta name="twitter:title" content="Java自定义注解"/>
+<meta name="twitter:description" content="注解格式 //元注解 public @interface 注解名称 { 属性列表; } 注解本质上就是一个接口，该接口默认继承Annotation接口。任何注解默认继承Annotati"/>
+<meta name="application-name" content="Dison&#39;s Blog&#39;">
+<meta name="apple-mobile-web-app-title" content="Dison&#39;s Blog&#39;"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://lovedison.cn/posts/java-custom-annotation/" /><link rel="prev" href="https://lovedison.cn/posts/java-reflection/" /><link rel="next" href="https://lovedison.cn/posts/cognitive-awakening/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Java自定义注解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/lovedison.cn\/posts\/java-custom-annotation\/"
+        },"genre": "posts","keywords": "java","wordcount":  2467 ,
+        "url": "https:\/\/lovedison.cn\/posts\/java-custom-annotation\/","datePublished": "2023-04-16T18:36:09+08:00","dateModified": "2023-04-16T18:36:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Dison"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dison的博客"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about-me/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dison的博客"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about-me/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java自定义注解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://lovedison.cn" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Dison</a></span>&nbsp;<span class="post-category">included in <a href="/categories/java/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>java</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-16">2023-04-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2467 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#注解属性">注解属性</a></li>
+    <li><a href="#使用自定义注解">使用自定义注解</a>
+      <ul>
+        <li><a href="#定义注解">定义注解</a></li>
+        <li><a href="#使用注解">使用注解</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#与注解解析相关的接口">与注解解析相关的接口</a></li>
+    <li><a href="#获取注解数据的原理">获取注解数据的原理</a></li>
+    <li><a href="#案例使用反射获取注解的数据">案例：使用反射获取注解的数据</a>
+      <ul>
+        <li><a href="#需求说明">需求说明</a></li>
+        <li><a href="#代码实现">代码实现</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#自定义注解test">自定义注解@Test</a></li>
+    <li><a href="#test注解使用">@Test注解使用</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="注解格式">注解格式</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//元注解
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="nd">@interface</span> <span class="err">注解名称</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">属性列表</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p><strong>注解本质上就是一个接口</strong>，该接口默认继承Annotation接口。任何注解默认继承Annotation接口</p>
+<p><strong>举例：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Student</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="nf">name</span><span class="o">();</span> <span class="c1">// 姓名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">age</span><span class="o">()</span> <span class="k">default</span> <span class="mi">18</span><span class="o">;</span> <span class="c1">// 年龄
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="nf">gender</span><span class="o">()</span> <span class="k">default</span> <span class="s">&#34;男&#34;</span><span class="o">;</span> <span class="c1">// 性别
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 该注解就有了三个属性：name，age，gender
+</span></span></span></code></pre></div><h2 id="注解属性">注解属性</h2>
+<ol>
+<li>属性作用：可以让用户在使用注解时传递参数，让注解的功能更加强大。</li>
+<li>属性格式
+<ul>
+<li><strong>格式1：数据类型 属性名();</strong></li>
+<li><strong>格式2：数据类型 属性名() default 默认值;</strong></li>
+</ul>
+</li>
+<li>适用数据类型
+<ul>
+<li>八种基本数据类型（<strong>int,float,boolean,byte,double,char,long,short</strong>)。</li>
+<li>String类型，Class类型，枚举类型，注解类型。</li>
+<li>以上所有类型的一维数组。</li>
+</ul>
+</li>
+</ol>
+<h2 id="使用自定义注解">使用自定义注解</h2>
+<p>使用格式：</p>
+<p>@注解名(属性名=属性值,属性名=属性值,属性名=属性值&hellip;)</p>
+<p>解析注解的步骤（本质获取注解属性值）：</p>
+<ol>
+<li>获取注解定义的位置的对象 （Class、Method、Field）</li>
+<li>获取指定的注解 <code>getAnnotation(Class)</code></li>
+<li>调用注解中的抽象方法获取配置的属性值</li>
+</ol>
+<h3 id="定义注解">定义注解</h3>
+<ol>
+<li><strong>定义一个注解：Book</strong>
+<ul>
+<li>包含属性：String value()   书名</li>
+<li>包含属性：double price()  价格，默认值为 100</li>
+<li>包含属性：String[] authors() 多位作者</li>
+</ul>
+</li>
+<li><strong>代码实现</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Book</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 书名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">String</span> <span class="nf">value</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">double</span> <span class="nf">price</span><span class="o">()</span> <span class="k">default</span> <span class="mi">100</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 多位作者
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">String</span><span class="o">[]</span> <span class="nf">authors</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h3 id="使用注解">使用注解</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">    使用注解
+</span></span></span><span class="line"><span class="cl"><span class="cm">    注意：如果属性有默认值，使用注解时可以不用赋值。如果没有则一定要赋值
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoUseAnnotation</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Book</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;Java编程思想&#34;</span><span class="o">,</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">100</span><span class="o">,</span> <span class="n">authors</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;Bruce Eckel&#34;</span><span class="o">,</span> <span class="s">&#34;Bruce Eckel2&#34;</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">use</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p><strong>使用注意事项</strong>：如果属性有默认值，使用注解时可以不用赋值。如果没有则一定要赋值</p>
+<p><strong>特殊情况：</strong></p>
+<ol>
+<li>当注解中只有一个属性且名称是value，在使用注解时给value属性赋值可以直接给属性值，无论value是单值元素还是数组类型。</li>
+<li>如果注解中除了value属性还有其他属性，且至少有一个属性没有默认值，则在使用注解给属性赋值时，value属性名不能省略。</li>
+</ol>
+<h1 id="元注解">元注解</h1>
+<p>默认情况下，注解可以用在任何地方，比如类，成员方法，构造方法，成员变量等地方。如果要限制注解的使用位置怎么办？<strong>元注解</strong>。</p>
+<ul>
+<li><strong>@Target</strong></li>
+<li><strong>@Retention</strong></li>
+</ul>
+<p><strong>@Target作用：指明此注解用在哪个位置，如果不写默认是任何地方都可以使用。</strong></p>
+<ul>
+<li>可选的参数值在枚举类<strong>ElemenetType</strong>中包括：
+<ul>
+<li>TYPE： 用在类，接口上</li>
+<li>FIELD：用在成员变量上</li>
+<li>METHOD： 用在方法上</li>
+<li>PARAMETER：用在参数上</li>
+<li>CONSTRUCTOR：用在构造方法上</li>
+<li>LOCAL_VARIABLE：用在局部变量上</li>
+</ul>
+</li>
+</ul>
+<p><strong>@Retention作用：定义该注解的生命周期(有效范围)</strong></p>
+<ul>
+<li>可选的参数值在枚举类型RetentionPolicy中包括：
+<ul>
+<li>SOURCE：注解只存在于Java源代码中，编译生成的字节码文件中就不存在了。</li>
+<li>CLASS：注解存在于Java源代码、编译以后的字节码文件中，运行的时候内存中没有，默认值。</li>
+<li>RUNTIME：注解存在于Java源代码中、编译以后的字节码文件中、运行时内存中，程序可以通过反射获取该注解。</li>
+</ul>
+</li>
+</ul>
+<h1 id="注解解析">注解解析</h1>
+<p>通过Java技术获取注解数据的过程则称为注解解析。</p>
+<h2 id="与注解解析相关的接口">与注解解析相关的接口</h2>
+<p><strong>Anontation</strong>：所有注解类型的公共接口，类似所有类的父类是Object。</p>
+<p><strong>AnnotatedElement</strong>：定义了与注解解析相关的方法，常用方法以下四个：</p>
+<ul>
+<li><code>default boolean isAnnotationPresent(Class&lt;? extends Annotation&gt; annotationClass) </code>
+<ul>
+<li>判断当前对象是否有指定的注解，有则返回true，否则返回false。</li>
+</ul>
+</li>
+<li><code>&lt;T extends Annotation&gt; T getAnnotation(Class&lt;T&gt; annotationClass)</code>
+<ul>
+<li>获得当前对象上指定的注解对象。</li>
+</ul>
+</li>
+<li><code>&lt;T extends Annotation&gt; T getAnnotation(Class&lt;T&gt; annotationClass)</code>
+<ul>
+<li>获得当前对象及其从父类上继承的所有的注解对象。</li>
+</ul>
+</li>
+<li><code>Annotation[] getAnnotations()</code>
+<ul>
+<li>获得当前对象上所有的注解对象，不包括父类的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="获取注解数据的原理">获取注解数据的原理</h2>
+<p>注解作用在那个成员上，就通过反射获得该成员的对象来得到它的注解。</p>
+<ul>
+<li>如注解作用在方法上，就通过方法(Method)对象得到它的注解。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"> <span class="c1">// 得到方法对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="n">Method</span> <span class="n">method</span><span class="o">=</span><span class="n">clazz</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">&#34;方法名&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="c1">// 根据注解名得到方法上的注解对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="n">Book</span> <span class="n">book</span><span class="o">=</span><span class="n">method</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> 
+</span></span></code></pre></div><ul>
+<li>如注解作用在类上，就通过Class对象得到它的注解。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 获得Class对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Class</span> <span class="n">c</span><span class="o">=</span><span class="err">类名</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 根据注解的Class获得使用在类上的注解对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Book</span> <span class="n">book</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></span></code></pre></div><h2 id="案例使用反射获取注解的数据">案例：使用反射获取注解的数据</h2>
+<h3 id="需求说明">需求说明</h3>
+<ol>
+<li>定义注解Book，要求如下：
+<ul>
+<li>包含属性：String value()   书名</li>
+<li>包含属性：double price()  价格，默认值为 100</li>
+<li>包含属性：String[] authors() 多位作者</li>
+<li>限制注解使用的位置：类和成员方法上</li>
+<li>指定注解的有效范围：RUNTIME</li>
+</ul>
+</li>
+<li>定义BookStore类，在类和成员方法上使用Book注解</li>
+<li>定义DemoResolutionAnn测试类获取Book注解上的数据</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<p><strong>注解Book</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Book</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 书名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">String</span> <span class="nf">value</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">double</span> <span class="nf">price</span><span class="o">()</span> <span class="k">default</span> <span class="mi">100</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 作者
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">String</span><span class="o">[]</span> <span class="nf">authors</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p><strong>BookStore类</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@Book</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;红楼梦&#34;</span><span class="o">,</span> <span class="n">authors</span> <span class="o">=</span> <span class="s">&#34;曹雪芹&#34;</span><span class="o">,</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">998</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookStore</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p><strong>ResolutionAnnotation类</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">    解析注解：取出BookStore类上的注解数据
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoResolutionAnn</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//1.获取类的字节码对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Class</span><span class="o">&lt;</span><span class="n">BookStore</span><span class="o">&gt;</span> <span class="n">clz</span> <span class="o">=</span> <span class="n">BookStore</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//2.判断类是否使用注解
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">boolean</span> <span class="n">isAnn</span> <span class="o">=</span> <span class="n">clz</span><span class="o">.</span><span class="na">isAnnotationPresent</span><span class="o">(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//3.如果使用注解：则解析注解的属性
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">isAnn</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//获取字节码对象中的注解对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="n">clz</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//获取Book注解的属性
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="na">value</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;value = &#34;</span> <span class="o">+</span> <span class="n">value</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">double</span> <span class="n">price</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="na">price</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">String</span><span class="o">[]</span> <span class="n">authors</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="na">authors</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;price = &#34;</span> <span class="o">+</span> <span class="n">price</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;authors = &#34;</span> <span class="o">+</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">authors</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 打印
+</span></span></span><span class="line"><span class="cl"><span class="c1">// value = 红楼梦
+</span></span></span><span class="line"><span class="cl"><span class="c1">// price = 998.0
+</span></span></span><span class="line"><span class="cl"><span class="c1">// authors = [曹雪芹]
+</span></span></span></code></pre></div><h1 id="综合案例模拟junit的test注解">综合案例：模拟JUnit的@Test注解</h1>
+<p>案例分析</p>
+<ol>
+<li>自定义注解@Test：功能类似@Test注解
+<ul>
+<li>添加元注解，保证自定义注解只能修饰方法，且在运行时可以获得。</li>
+<li>编写调用类MyTestMainClass，使用main方法调用目标类，模拟Junit的运行，只要有@Test注释的方法都会运行。</li>
+</ul>
+</li>
+<li>编写测试类使用注解@Test，然后给方法（测试方法）加上 @Test注解</li>
+</ol>
+<h2 id="自定义注解test">自定义注解@Test</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@Target</span><span class="o">(</span><span class="n">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Test</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//定义注解执行器类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyTestMainClass</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IllegalAccessException</span><span class="o">,</span> <span class="n">InstantiationException</span><span class="o">,</span> <span class="n">InvocationTargetException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取类的字节码对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Class</span><span class="o">&lt;</span><span class="n">DemoUseCustomTest</span><span class="o">&gt;</span> <span class="n">clz</span> <span class="o">=</span> <span class="n">DemoUseCustomTest</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取类的对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">DemoUseCustomTest</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">clz</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取调用类的方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Method</span><span class="o">[]</span> <span class="n">methods</span> <span class="o">=</span> <span class="n">clz</span><span class="o">.</span><span class="na">getMethods</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//遍历获取方法的数组，反射执行方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="n">Method</span> <span class="n">m</span> <span class="o">:</span> <span class="n">methods</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//如果是Test注解，则执行。否则不执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="na">isAnnotationPresent</span><span class="o">(</span><span class="n">Test</span><span class="o">.</span><span class="na">class</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">m</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// test01  test03 会打印
+</span></span></span></code></pre></div><h2 id="test注解使用">@Test注解使用</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoUseCustomTest</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test01</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;test01&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test02</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;test02&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test03</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;test03&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-04-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/java/">java</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/java-reflection/" class="prev" rel="prev" title="Java反射"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Java反射</a>
+            <a href="/posts/cognitive-awakening/" class="next" rel="next" title="《认知觉醒》">《认知觉醒》<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.112.0-DEV">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://lovedison.cn" target="_blank">Dison</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

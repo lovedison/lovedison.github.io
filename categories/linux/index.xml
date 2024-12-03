@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>linux - Category - Dison的博客</title>
+        <link>https://lovedison.cn/categories/linux/</link>
+        <description>linux - Category - Dison的博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 25 May 2022 14:20:54 &#43;0800</lastBuildDate><atom:link href="https://lovedison.cn/categories/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux环境变量</title>
+    <link>https://lovedison.cn/posts/linux-environment-variables/</link>
+    <pubDate>Wed, 25 May 2022 14:20:54 &#43;0800</pubDate>
+    <author>Dison</author>
+    <guid>https://lovedison.cn/posts/linux-environment-variables/</guid>
+    <description><![CDATA[对于linux或者mac，bash是用户和系统交互的最基本的脚本环境。 而**zsh（Z shell）**是bash的一个替代品，他对于bash]]></description>
+</item>
+</channel>
+</rss>

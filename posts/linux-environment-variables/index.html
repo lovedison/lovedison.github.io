@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Linux环境变量 - Dison的博客</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Linux环境变量" />
+<meta property="og:description" content="对于linux或者mac，bash是用户和系统交互的最基本的脚本环境。 而**zsh（Z shell）**是bash的一个替代品，他对于bash" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lovedison.cn/posts/linux-environment-variables/" /><meta property="og:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-25T14:20:54+08:00" />
+<meta property="article:modified_time" content="2022-05-25T14:20:54+08:00" /><meta property="og:site_name" content="Dison的博客" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/>
+
+<meta name="twitter:title" content="Linux环境变量"/>
+<meta name="twitter:description" content="对于linux或者mac，bash是用户和系统交互的最基本的脚本环境。 而**zsh（Z shell）**是bash的一个替代品，他对于bash"/>
+<meta name="application-name" content="Dison&#39;s Blog&#39;">
+<meta name="apple-mobile-web-app-title" content="Dison&#39;s Blog&#39;"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://lovedison.cn/posts/linux-environment-variables/" /><link rel="prev" href="https://lovedison.cn/posts/the-effective-manager/" /><link rel="next" href="https://lovedison.cn/posts/mysql-lock/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Linux环境变量",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/lovedison.cn\/posts\/linux-environment-variables\/"
+        },"genre": "posts","keywords": "linux","wordcount":  1526 ,
+        "url": "https:\/\/lovedison.cn\/posts\/linux-environment-variables\/","datePublished": "2022-05-25T14:20:54+08:00","dateModified": "2022-05-25T14:20:54+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Dison"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dison的博客"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about-me/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dison的博客"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about-me/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Linux环境变量</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://lovedison.cn" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Dison</a></span>&nbsp;<span class="post-category">included in <a href="/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>linux</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-05-25">2022-05-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1526 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#linux提供了修改和查看环境变量的命令">Linux提供了修改和查看环境变量的命令：</a></li>
+        <li><a href="#环境变量执行顺序">环境变量执行顺序</a></li>
+      </ul>
+    </li>
+    <li><a href="#1-profile-bashrcbash_profile-bashrc"><strong>1. profile、 bashrc、.bash_profile、 .bashrc</strong></a></li>
+    <li><a href="#2-bashrc和bash_profile的区别"><strong>2 .bashrc和.bash_profile的区别</strong></a></li>
+    <li><a href="#3-建议"><strong>3. 建议</strong></a></li>
+    <li><a href="#ps环境变量">PS环境变量</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>对于linux或者mac，bash是用户和系统交互的最基本的脚本环境。</p>
+<p>而**zsh（Z shell）**是bash的一个替代品，他对于bash有了很多的优化，无论是使用命令，外观，体验，能够让用户更方便顺畅的使用Terminal。</p>
+<h3 id="linux提供了修改和查看环境变量的命令">Linux提供了修改和查看环境变量的命令：</h3>
+<ul>
+<li>echo 显示某个环境变量值 echo $PATH</li>
+<li>export 设置一个新的环境变量 export HELLO=&ldquo;hello&rdquo; (可以无引号)</li>
+<li>env 显示所有环境变量</li>
+<li>set 显示本地定义的shell变量</li>
+<li>unset 清除环境变量 unset HELLO</li>
+<li>readonly 设置只读环境变量 readonly HELLO</li>
+</ul>
+<h3 id="环境变量执行顺序">环境变量执行顺序</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../../post/linux01.png"
+        data-srcset="../../post/linux01.png, ../../post/linux01.png 1.5x, ../../post/linux01.png 2x"
+        data-sizes="auto"
+        alt="../../post/linux01.png"
+        title="linux01" /></p>
+<h2 id="1-profile-bashrcbash_profile-bashrc"><strong>1. profile、 bashrc、.bash_profile、 .bashrc</strong></h2>
+<p>bash会在用户登录时，读取下列四个环境配置文件：</p>
+<p>全局环境变量设置文件：/etc/profile、/etc/bashrc。用户环境变量设置文件：~/.bash_profile、~/.bashrc。</p>
+<p><strong>读取顺序：① /etc/profile、② ~/.bash_profile、③ ~/.bashrc、④ /etc/bashrc。</strong></p>
+<p>**①
+/etc/profile：此文件为系统的每个用户设置环境信息，系统中每个用户登录时都要执行这个脚本，如果系统管理员希望某个设置对所有用户都生效，可以写在这个脚本里，该文件也会从/etc/profile.d目录中的配置文件中搜集shell的设置。
+**</p>
+<p>②**~/.bash_profile**：每个用户都可使用该文件设置专用于自己的shell信息，当用户登录时，该文件仅执行一次。默认情况下，他设置一些环境变量，执行用户的.bashrc文件。</p>
+<p><strong>③~/.bashrc：该文件包含专用于自己的shell信息，当登录时以及每次打开新shell时，该文件被读取。</strong></p>
+<p>④**/etc/bashrc**：为每一个运行bash shell的用户执行此文件，当bash shell被打开时，该文件被读取。</p>
+<h2 id="2-bashrc和bash_profile的区别"><strong>2 .bashrc和.bash_profile的区别</strong></h2>
+<ul>
+<li>.bash_profile会用在登陆shell， .bashrc 使用在交互式非登陆 shell
+。简单说来，它们的区别主要是.bash_profile是在你每次登录的时候执行的；.bashrc是在你新开了一个命令行窗口时执行的。</li>
+<li>当通过控制台进行登录（输入用户名和密码）：在初始化命令行提示符的时候会执行.bash_profile 来配置你的shell环境。</li>
+<li>但是如果已经登录到机器，在Gnome或者是KDE也开了一个新的终端窗口（xterm），这时，.bashrc会在窗口命令行提示符出现前被执行。当你在终端敲入/bin/bash时.bashrc也会在这个新的bash实例启动的时候执行。</li>
+</ul>
+<h2 id="3-建议"><strong>3. 建议</strong></h2>
+<p>大多数的时候你不想维护两个独立的配置文件，一个登录的一个非登录的shell。当你设置PATH时，你想在两个文件都适用。可以在.bash_profile中调用.bashrc，然后将PATH和其他通用的设置放到.bashrc中。要做到这几点，添加以下几行到.bash_profile中：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f ~/.bashrc <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    . ~/.bashrc
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></div><p>现在，当你从控制台登录机器的时候，.bashrc就会被执行。</p>
+<h2 id="ps环境变量">PS环境变量</h2>
+<p>PS即是Prompt String,命令提示符的意思。在bash中一共有四个。分为表示为<code>PS1</code>,<code>PS2</code>,<code>PS3</code>,<code>PS4</code>。</p>
+<ul>
+<li>PS1是用来控制默认提示符显示格式。
+<ul>
+<li><code>\t</code>显示时间为24小时格式，如HHMMSS</li>
+<li><code>\T</code>显示时间为12小时格式</li>
+<li><code>\A</code>显示时间为24小时格式HHMM</li>
+<li><code>\u</code>当前用户的账号名称</li>
+<li><code>\v</code>BASH的版本信息</li>
+<li><code>\w</code>完整的工作目录名称</li>
+</ul>
+</li>
+<li>一个非常长的命令可以通过在末尾加<code>\</code>使其分行显示。多行命令的默认提示符是<code>&gt;</code>。 我们可以通过修改<code>PS2</code>，将提示符修改为<code>-&gt;</code>。</li>
+<li>PS3: shell脚本中使用<code>select</code>循环时的提示符。</li>
+<li>PS4: 它是Linux/Unix下的一个用于控制脚本调试显示信息的环境变量。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-05-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/linux/">linux</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/the-effective-manager/" class="prev" rel="prev" title="读《卓有成效的管理者》"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>读《卓有成效的管理者》</a>
+            <a href="/posts/mysql-lock/" class="next" rel="next" title="Mysql锁分析">Mysql锁分析<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.112.0-DEV">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://lovedison.cn" target="_blank">Dison</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

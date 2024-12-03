@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Java反射 - Dison的博客</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Java反射" />
+<meta property="og:description" content="反射(Reflection) 允许运行中的Java 程序获取自身的信息，并且可以操作类或对象的内部属性。 反射的核心是 JVM 在运行时才动态加载类或调用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lovedison.cn/posts/java-reflection/" /><meta property="og:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-15T11:32:19+08:00" />
+<meta property="article:modified_time" content="2023-04-15T11:32:19+08:00" /><meta property="og:site_name" content="Dison的博客" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/23441711?v=4"/>
+
+<meta name="twitter:title" content="Java反射"/>
+<meta name="twitter:description" content="反射(Reflection) 允许运行中的Java 程序获取自身的信息，并且可以操作类或对象的内部属性。 反射的核心是 JVM 在运行时才动态加载类或调用"/>
+<meta name="application-name" content="Dison&#39;s Blog&#39;">
+<meta name="apple-mobile-web-app-title" content="Dison&#39;s Blog&#39;"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://lovedison.cn/posts/java-reflection/" /><link rel="prev" href="https://lovedison.cn/posts/bilibili-jiangnanqinshi-home/" /><link rel="next" href="https://lovedison.cn/posts/java-custom-annotation/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Java反射",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/lovedison.cn\/posts\/java-reflection\/"
+        },"genre": "posts","keywords": "java","wordcount":  1433 ,
+        "url": "https:\/\/lovedison.cn\/posts\/java-reflection\/","datePublished": "2023-04-15T11:32:19+08:00","dateModified": "2023-04-15T11:32:19+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Dison"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Dison的博客"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about-me/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Dison的博客"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about-me/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java反射</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://lovedison.cn" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Dison</a></span>&nbsp;<span class="post-category">included in <a href="/categories/java/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>java</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-15">2023-04-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1433 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#java-反射主要提供以下功能">Java 反射主要提供以下功能</a></li>
+    <li><a href="#获取类的class对象的方式">获取类的Class对象的方式</a></li>
+    <li><a href="#tostring方法">toString()方法</a></li>
+    <li><a href="#获取类的class对象的">获取类的Class对象的</a></li>
+    <li><a href="#class类中与constructor相关方法">Class类中与Constructor相关方法</a></li>
+    <li><a href="#constructor类中常用方法">Constructor类中常用方法</a></li>
+    <li><a href="#class类中与method相关方法">Class类中与Method相关方法</a></li>
+    <li><a href="#method类中关键方法">Method类中关键方法</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>反射(Reflection) <strong>允许运行中的Java 程序获取自身的信息，并且可以操作类或对象的内部属性</strong>。</p>
+<p>反射的核心是 JVM 在运行时才动态加载类或调用方法/访问属性，它不需要事先（写代码的时候或编译期）知道运行对象是谁。</p>
+<h2 id="java-反射主要提供以下功能">Java 反射主要提供以下功能</h2>
+<ul>
+<li>在运行时，判断任意一个对象所属的类；</li>
+<li>在运行时，构造任意一个类的对象；</li>
+<li>在运行时，判断任意一个类所具有的成员变量和方法（甚至可以调用private方法）；</li>
+<li>在运行时，调用任意一个对象的方法</li>
+</ul>
+<h2 id="获取类的class对象的方式">获取类的Class对象的方式</h2>
+<table>
+<thead>
+<tr>
+<th>获取class对象方式</th>
+<th>作用</th>
+<th>应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对象.getClass()</td>
+<td>通过对象的getClass()方法获取</td>
+<td>多用于对象的获取字节码的方式</td>
+</tr>
+<tr>
+<td>类名.class</td>
+<td>通过类名的属性class获取</td>
+<td>多用于参数的传递</td>
+</tr>
+<tr>
+<td>Class.forName(&ldquo;全类名&rdquo;)</td>
+<td>通过指定的字符串路径获取</td>
+<td>多用于配置文件，将类名定义在配置文件中。读取文件，加载类</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tostring方法">toString()方法</h2>
+<ol>
+<li><code>toString()</code>
+<ul>
+<li>return (isInterface() ? &ldquo;interface &quot; : (isPrimitive() ? &quot;&rdquo; : &ldquo;class &ldquo;))+ getName();</li>
+</ul>
+</li>
+<li><code>toGenericString()</code>
+<ul>
+<li>return a string describing this Class, including information about modifiers and type parameters</li>
+<li>返回描述此类的字符串，包括有关修饰符和类型参数的信息。</li>
+</ul>
+</li>
+</ol>
+<h2 id="获取类的class对象的">获取类的Class对象的</h2>
+<ol>
+<li><strong><code>Class&lt;?&gt; forName(String className)</code></strong>
+<ul>
+<li>返回与给定字符串名称的类或接口相关联的类对象</li>
+<li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//反射获取目标类的字节码对象，并执行其成员方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;com.abc.clazz.Student&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">c1</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//反射获取有参数方法：Student的eat方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Method</span> <span class="n">eatMethod</span> <span class="o">=</span> <span class="n">c1</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(</span><span class="s">&#34;eat&#34;</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="kt">double</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//调用eat方法，传递实际参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">eatMethod</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">obj</span><span class="o">,</span> <span class="s">&#34;西红柿炒鸡蛋&#34;</span><span class="o">,</span> <span class="mf">9.9</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li><code>Class&lt;?&gt; forName(String name, boolean initialize, ClassLoader loader)</code>
+<ul>
+<li>使用给定的类加载器返回与给定字符串名称的类或接口相关联的类对象。如果参数loader为空，则通过引导类加载器加载该类。只有当initialize参数为true并且尚未被初始化时，该类才被初始化。</li>
+</ul>
+</li>
+</ol>
+<h2 id="class类中与constructor相关方法">Class类中与Constructor相关方法</h2>
+<ol>
+<li><code>Constructor[] getConstructors()</code>
+<ul>
+<li>获取Class对象所表示的类的所有公共构造函数</li>
+</ul>
+</li>
+<li><code>Constructor&lt;T&gt; getConstructor(Class&lt;?&gt;... parameterTypes)</code>
+<ul>
+<li>返回一个Constructor对象，该对象反映此Class对象所表示的类的指定公共构造函数.parameterTypes参数是一个Class对象的数组，用于按声明的顺序标识构造函数的形式参数类型</li>
+</ul>
+</li>
+<li><code>Constructor&lt;T&gt; getDeclaredConstructor(Class&lt;?&gt;... parameterTypes)</code>
+<ul>
+<li>Class类的getDeclaredConstructor()方法,可获取到类的私有构造器(
+包括带有其他修饰符的构造器），但在使用private的构造器时，必须设置setAccessible()为true,才可以获取并操作该Constructor对象。</li>
+<li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">   <span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl">   <span class="kt">void</span> <span class="nf">testName</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">HelloWorld</span> <span class="n">world</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">String</span> <span class="n">className</span><span class="o">=</span><span class="s">&#34;hello.HelloWorld&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Constructor</span> <span class="n">con</span><span class="o">=</span><span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">className</span><span class="o">).</span><span class="na">getDeclaredConstructor</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">       <span class="n">con</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Object</span> <span class="n">obj</span><span class="o">=</span><span class="n">con</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">       <span class="n">world</span><span class="o">=(</span><span class="n">HelloWorld</span><span class="o">)</span> <span class="n">obj</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">world</span><span class="o">.</span><span class="na">sayHello</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">   <span class="o">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<pre tabindex="0"><code></code></pre></li>
+</ol>
+<h2 id="constructor类中常用方法">Constructor类中常用方法</h2>
+<ol>
+<li><strong><code>T newInstance(Object ... initargs)</code></strong>
+根据指定参数创建对象。</li>
+<li><code>T newInstance()</code>
+空参构造方法创建对象。</li>
+<li><code>void setAccessible(boolean flag)</code>
+设置是否允许访问私有构造方法</li>
+<li><code>Class&lt;?&gt;[] getParameterTypes()</code>
+获取构造方法的所有参数类型</li>
+</ol>
+<h2 id="class类中与method相关方法">Class类中与Method相关方法</h2>
+<ol>
+<li><code>Method[] getMethods()</code>
+获取所有的public修饰的成员方法，包括父类中。</li>
+<li><code>Method getMethod(String name, Class&lt;?&gt;... parameterTypes)</code>
+根据方法名和参数类型获得一个方法对象，只能是获取public修饰的</li>
+<li><code>Method[] getDeclaredMethods()</code>
+获取所有的成员方法，包括私有的，但是不包括父类中的方法</li>
+<li><code>Method getDeclaredMethod(String name, Class&lt;?&gt;... parameterTypes)</code>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">     <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ClassDemo</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">             <span class="n">ClassDemo</span> <span class="n">cls</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassDemo</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">             <span class="n">Class</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">             <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                 <span class="c1">// parameter type is null
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                 <span class="n">Method</span> <span class="n">m</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">&#34;show&#34;</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;method = &#34;</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                 <span class="c1">// method Integer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                 <span class="n">Class</span><span class="o">[]</span> <span class="n">cArg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Class</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">cArg</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">Method</span> <span class="n">lMethod</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">&#34;showInteger&#34;</span><span class="o">,</span> <span class="n">cArg</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;method = &#34;</span> <span class="o">+</span> <span class="n">lMethod</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">             <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">             <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">private</span> <span class="n">Integer</span> <span class="nf">show</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">showInteger</span><span class="o">(</span><span class="n">Integer</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">78655</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span><span class="line"><span class="cl">     <span class="c1">// return:
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="c1">//method = private java.lang.Integer reflection.ClassDemo.show()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>     <span class="c1">//method = public void reflection.ClassDemo.showInteger(java.lang.Integer)
+</span></span></span></code></pre></div></li>
+</ul>
+<pre tabindex="0"><code></code></pre></li>
+</ol>
+<h2 id="method类中关键方法">Method类中关键方法</h2>
+<ol>
+<li><strong><code>Object invoke(Object obj, Object... args)</code></strong>
+<ul>
+<li>返回值Object，表示调用方法后，该方法的返回值</li>
+<li>根据参数args调用对象obj的该成员方法</li>
+<li>如果obj=null，则表示该方法是静态方法</li>
+</ul>
+</li>
+<li><code>void setAccessible(boolean flag)</code></li>
+<li><code>Class&lt;?&gt;[] getParameterTypes()</code>
+<ul>
+<li>获取方法的所有参数类型</li>
+</ul>
+</li>
+<li><code>Class&lt;?&gt; getReturnType()</code>
+<ul>
+<li>获取方法的返回值类型</li>
+</ul>
+</li>
+<li><code>String getName()</code>
+<ul>
+<li>获取方法的名称</li>
+</ul>
+</li>
+<li><code>Annotation[][] getParameterAnnotations()</code>
+<ul>
+<li>获取方法的参数注解</li>
+</ul>
+</li>
+</ol>
+<h1 id="代码位置">代码位置</h1>
+<ul>
+<li>java.lang.Object</li>
+<li>java.lang.Class</li>
+<li>java.lang.reflect.Constructor</li>
+<li>java.lang.reflect.Method</li>
+<li>java.lang.annotation.Annotation</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-04-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/java/">java</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/bilibili-jiangnanqinshi-home/" class="prev" rel="prev" title="Bilibili天涯明月刀自制曲谱"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Bilibili天涯明月刀自制曲谱</a>
+            <a href="/posts/java-custom-annotation/" class="next" rel="next" title="Java自定义注解">Java自定义注解<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.112.0-DEV">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://lovedison.cn" target="_blank">Dison</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
